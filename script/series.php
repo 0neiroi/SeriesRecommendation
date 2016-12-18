@@ -14,9 +14,8 @@
   // Build query
   $query = "SELECT * FROM project FROM series";
 
-  // Sort
+  // Sort by name
   if (isset($_GET['sort'])){
-    // By name
     if ($_GET['sort'] == "name"){
       $query .= " ORDER BY name";
     }
@@ -34,7 +33,7 @@
   echo json_encode($project, JSON_UNESCAPED_SLASHES);
 
   // Version sans json_encode
-  //encode($project);
+  // encode($project);
 
   function encode($project){
     echo '{"project":[';
@@ -62,4 +61,7 @@
    }
    echo "]}";
   }
+
+  // var_dump($project);
+
 ?>
