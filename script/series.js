@@ -37,11 +37,24 @@ function loadJSONDoc(){
 }
 
 /**
- * Insert the specified content (array of movies) in the specified table
+ * Insert the specified content (array of movies) in the specified list
  */
 function insert(){
-	var container = document.getElementById("affichageSeries");
-	console.log("coucou insertion");
-  	console.log(obj.series[0].id);
+	//console.log("coucou insertion");
+  	//console.log(obj.series[0].id);
+
+	// pour chaque série présente dans le tableau retourné en JSON, on va afficher le titre de la série dans une liste
+	for (var i=0;i<obj.series.length;i++){
+		// on récupère la liste où seront affichées les séries
+		var container = document.getElementById("listeSeries");
+
+		// on crée une nouvelle puce dans la liste
+		var newli = document.createElement("li");
+		// on attribue à cette puce le nom de la série
+		newli.setAttribute(obj.series[i].name);	
+		// on ajoute la puce dans la liste
+		container.appendChild(newli);
+	}
+
 }
 
