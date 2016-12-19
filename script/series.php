@@ -12,7 +12,10 @@
   $connection->exec("SET NAMES 'utf8'");
 
   // Build query
-  $query = "SELECT * FROM project FROM series";
+  $query = "SELECT * FROM series"; 
+  
+  /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
+  //  $query = "SELECT * FROM project FROM series"; hm il faut faire un choix soit series soit project mais pas les deux 0:-) 
 
   // Sort by name
   if (isset($_GET['sort'])){
