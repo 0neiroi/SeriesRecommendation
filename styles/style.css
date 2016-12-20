@@ -53,11 +53,17 @@ transition: .8s all .3s;
 	border: 1px solid black;
 } 
 #menu li:hover ul{
-max-height:200px;
+	max-height:200px;
 }
 #menu li:hover{
 	background-color:black;
 }
+#corps{
+    background-color:white;
+	text-align: left;
+	color:black;
+}
+
 footer{
     background-color: grey;
     color: white;
@@ -79,8 +85,5 @@ footer a{
     color:black;
 	margin-top:30px;
 }
-}#corps{
-    background-color:white;
-	text-align: left;
-}
+
 
