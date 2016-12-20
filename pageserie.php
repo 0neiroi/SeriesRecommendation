@@ -6,8 +6,8 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
+        <link href="styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles/style.css" rel="stylesheet">
         <meta charset="UTF-8">
         <title></title>
     </head>
@@ -22,7 +22,7 @@ and open the template in the editor.
             <div class="row" id='navbar'>
                 <ul id ='menu'>
                     <li class="col-lg-2 col-md-3 col-sm-3 col-xs-6">
-                        <a href='acceuil.php'>Acceuil<a/>
+                        <a href='accueil.php'>Accueil<a/>
                     </li>
                     <li class='col-lg-2 col-md-3 col-sm-3 col-xs-6'>
                         <a href=''>Séries</a>
@@ -56,7 +56,7 @@ and open the template in the editor.
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 ">
                 <div class="row">
                     <div class="col-lg-4 col-md-5 col-sm-6 col-xs-8">
-                        <img src=<!-- mettre image de la serie--> alt=<!-- titre de la serie--> />     
+                        <!--<img src= mettre image de la serie alt= titre de la serie />     -->
                     </div>
                     <div class=" col-lg-8 col-md-7 col-sm-6 col-xs-12">
                         <h1> Titre:</h1>
@@ -77,13 +77,13 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
-                <img src=<!--recuperer les images de chaque saison--> alt=<!-- saison x--> />
+                <!-- <img src=recuperer les images de chaque saison alt= saison x /> -->
             </div>
         </div>
         <footer class="row">
             <div class='row'>
                 <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> <p>Desciption du site</p></div>
-                <div class='col-lg-2 col-md-6 col-sm-9 col-xs-12' id='plan'><p>Acceuil</br>séries</br>Profil</br> S'identifier/S'inscrire</br>Recherche</p></div>
+                <div class='col-lg-2 col-md-6 col-sm-9 col-xs-12' id='plan'><p>Accueil</br>séries</br>Profil</br> S'identifier/S'inscrire</br>Recherche</p></div>
                 <div class="col-lg-4 col-md-12 col-sm-3 col-xs-12 col-lg-offset-2">
                     <div class='row'>
 
