@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link href="styles/bootstrap/css/bootstrap.css.map" rel="stylesheet">
+        <link href="styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		 <link href="styles/style.css" rel="stylesheet">
         <meta charset="UTF-8">
         <title></title>
