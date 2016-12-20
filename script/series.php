@@ -31,15 +31,15 @@
   }
 
   // Convert to JSON  
-  $project = array();
-  $project['project'] = $rows;
-  echo json_encode($project, JSON_UNESCAPED_SLASHES);
+  $series = array();
+  $series['series'] = $rows;
+  echo json_encode($series, JSON_UNESCAPED_SLASHES);
   // Version sans json_encode
-  // encode($project);
+  // encode($series);
 
-  function encode($project){
-    echo '{"project":[';
-    $rows = $project['project'];
+  function encode($series){
+    echo '{"series":[';
+    $rows = $series['series'];
     for ($i = 0; $i < sizeof($rows); $i++){
      $row = $rows[$i];
      echo "{\"id\":\"$row[id]\"," .
@@ -64,6 +64,6 @@
    echo "]}";
   }
 
-  // var_dump($project);
+  // var_dump($series);
 
 ?>
