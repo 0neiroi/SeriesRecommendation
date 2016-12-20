@@ -34,7 +34,6 @@
   $project = array();
   $project['project'] = $rows;
   echo json_encode($project, JSON_UNESCAPED_SLASHES);
-
   // Version sans json_encode
   // encode($project);
 
