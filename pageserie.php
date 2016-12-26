@@ -54,7 +54,7 @@ and open the template in the editor.
 
                           <!-- Panel for connection -->
                           <div class="panel">
-                            <form action="personal-space.php" method="post">
+                            <form action="script/personal-space.php" method="post">
                               <div>
                                 <div>
                                   <label for="identifier1">Identifiant</label>
@@ -75,7 +75,7 @@ and open the template in the editor.
                         
                           <!-- Panel for subscription -->
                           <div class="panel">
-                            <form action="registration.php" method="post">
+                            <form action="script/registration.php" method="post">
                               <div id="credentials">
                                 <div>
                                   <label for="identifier2">Nom d'utilisateur</label>
@@ -164,8 +164,8 @@ and open the template in the editor.
 
 
                 <div class="col-xs-12 col-md-12 col-sm-12 col-lg-4" id="recherche">
-                    <form>
-                        <input type="text"  value="rechercher"/>
+                    <form action="script/search.php" method="get">
+                        <input type="text" name="search" value="rechercher"/>
                         <input type="submit" value=""/>
                     </form>
                 </div>
