@@ -51,10 +51,17 @@ and open the template in the editor.
 
 
         </header>
-        <?php $bdd = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', ''); ?>
+        <?php 
+  // Connect to the database
+  require 'script/base.php';
+
+  // Character encoding of the database
+  $connection->exec("SET NAMES 'utf8'");
+
+   ?>
         <h1><?php
             // on affiche le nom de l'utilisateur a partir de son id transmi a la connection
-            $req = $bdd->prepare('SELECT name FROM users WHERE id = ?');
+            $req = $connection->prepare('SELECT name FROM users WHERE id = ?');
             $req->execute(array($_GET['id']));
             $donnee = $req->fetch();
             echo $donnee;
@@ -62,7 +69,7 @@ and open the template in the editor.
         <p> Vos séries en cours:</p>
         <?php
         // on va chercher le nom des séries que l'utilisateur a vues
-        $name = $bdd->prepare('SELECT name FROM series WHERE id=
+        $name = $connection->prepare('SELECT name FROM series WHERE id=
                  (
                 SELECT DISTINCT serie_id FROM seriesseasons WHERE season_id=
                 (
@@ -83,7 +90,7 @@ and open the template in the editor.
         
      
             //pour chaque série que l'utilisateur regarde on va chercher la saison a laquelle il est et le dernier épisode qu'il a vu.
-            $season_max = $bdd->query('SELECT MAX  number FROM seasons WHERE season_id=
+            $season_max = $connection->query('SELECT MAX  number FROM seasons WHERE season_id=
                              (
                                SELECT season_id FROM seriesseasons WHERE series_id=
                                (
@@ -96,7 +103,7 @@ and open the template in the editor.
                                  SELECT episode_id FROM usersepisodes WHERE user_id="' . $user_id . '"))');
             $max_s = $season_max->fetch();
 
-            $episode_max = $bdd->query('SELECT MAX number FROM episodes WHERE id=(SELECT episode_id FROM seasonsepisodes WHERE season_id=
+            $episode_max = $connection->query('SELECT MAX number FROM episodes WHERE id=(SELECT episode_id FROM seasonsepisodes WHERE season_id=
                                             (
                                             SELECT season_id FROM seasons WHERE  number="' . $max_s['number'] . '"
                                             AND id=
@@ -131,12 +138,12 @@ and open the template in the editor.
         </form>
         <?php
         // on verifie si ce qu'il a regardé existe dans la base de données
-        $reqserie=$bdd->query('SELECT name FROM serie WHERE name="'.$POST['serie'].'"');
-        $reqsaison=$bdd->query('SELECT number FROM season WHERE id=
+        $reqserie=$connection->query('SELECT name FROM serie WHERE name="'.$POST['serie'].'"');
+        $reqsaison=$connection->query('SELECT number FROM season WHERE id=
 (SELECT season_id FROM seriesseasons WHERE serie_id =
 (SELECT serie_id FROM serie WHERE name="'.$POST['serie'].'")) AND number="'.$POST['numsaison'].'"
 ');
-        $reqepisode=$bdd->query('SELECT number FROM episodes WHERE id=
+        $reqepisode=$connection->query('SELECT number FROM episodes WHERE id=
 ( SELECT episode_id FROM seasonsepisode WHERE season_id=
 (SELECT season_id FROM seriesseasons WHERE serie_id=
 (SELECT id FROM serie WHERE name="'.$POST['serie'].'") 
@@ -154,14 +161,14 @@ AND id = "'.$POST['numepisode'].'"
         </p>
         <?php
         }else{ // si ce qu'il a entré existe on va chercher l'id de l'episode puis on l'ajoute a la table usersepisodes en face de l'id de cet utilisateur
-            $episode_id=$bdd->query('SELECT id FROM episode WHERE number="'.$POST['numepisode'].'" AND id=
+            $episode_id=$connection->query('SELECT id FROM episode WHERE number="'.$POST['numepisode'].'" AND id=
 (SELECT episode_id FROM seasonsepisodes WHERE season_id=
 (SELECT season_id FROM seriesseasons WHERE season_id=
 ( SELECT id FROM seasons WHERE number="'.$POST['numsaison'].'")
  AND serie_id=
 (SELECT serie_id FROM series WHERE name="'.$POST['serie'].'")))
 ');
-            $nouvelepisode=$bdd->prepare('INSERT INTO usersepisodes (user_id, episode_id,) VALUES (:user_id,;episode_id');
+            $nouvelepisode=$connection->prepare('INSERT INTO usersepisodes (user_id, episode_id,) VALUES (:user_id,;episode_id');
             $nouvelepisode->execute(array(
                 'user_id'=>$user_id,
                 'episode_id'=>$episode_id->fetch(),
