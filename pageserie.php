@@ -101,29 +101,54 @@ and open the template in the editor.
                               
                               <!-- Choice of genres -->
                               <p>
-                                Votre style de musique :
+                                Votre genre de séries préféré :
                               </p>
                             
                               <div id="genres">
                                 <div>
-                                  <input type="checkbox" name="genres[]" value="blues"/><label>Blues</label>
-                                  <input type="checkbox" name="genres[]" value="classique"/><label>Classique</label>
-                                  <input type="checkbox" name="genres[]" value="country"/><label>Country</label>
+                                  <input type="checkbox" name="genres[]" value="Adventure"/><label>Aventure</label>
+                                  <input type="checkbox" name="genres[]" value="Fantasy"/><label>Fantasy</label>
+                                  <input type="checkbox" name="genres[]" value="Animation"/><label>Animation</label>
                                 </div>
                                 <div>
-                                  <input type="checkbox" name="genres[]" value="electro"/><label>Electro</label>
-                                  <input type="checkbox" name="genres[]" value="hiphop"/><label>Hip Hop</label>
-                                  <input type="checkbox" name="genres[]" value="jazz"/><label>Jazz</label>
+                                  <input type="checkbox" name="genres[]" value="Drama"/><label>Drama</label>
+                                  <input type="checkbox" name="genres[]" value="Horror"/><label>Horror</label>
+                                  <input type="checkbox" name="genres[]" value="Action"/><label>Action</label>
                                 </div>
                                 <div>
-                                  <input type="checkbox" name="genres[]" value="metal"/><label>Metal</label>
-                                  <input type="checkbox" name="genres[]" value="pop"/><label>Pop</label>
-                                  <input type="checkbox" name="genres[]" value="reggae"/><label>Reggae</label>
+                                  <input type="checkbox" name="genres[]" value="Comedy"/><label>Comedy</label>
+                                  <input type="checkbox" name="genres[]" value="History"/><label>History</label>
+                                  <input type="checkbox" name="genres[]" value="Western"/><label>Western</label>
                                 </div>
                                 <div>
-                                  <input type="checkbox" name="genres[]" value="rnb"/><label>RNB</label>
-                                  <input type="checkbox" name="genres[]" value="rock"/><label>Rock</label>
-                                  <input type="checkbox" name="genres[]" value="soul"/><label>Soul</label>
+                                  <input type="checkbox" name="genres[]" value="Thriller"/><label>Thriller</label>
+                                  <input type="checkbox" name="genres[]" value="Crime"/><label>Crime</label>
+                                  <input type="checkbox" name="genres[]" value="Documentary"/><label>Documentary</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Science Fiction"/><label>Sci-Fi</label>
+                                  <input type="checkbox" name="genres[]" value="Mystery"/><label>Mystery</label>
+                                  <input type="checkbox" name="genres[]" value="Music"/><label>Music</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Romance"/><label>Romance</label>
+                                  <input type="checkbox" name="genres[]" value="Family"/><label>Family</label>
+                                  <input type="checkbox" name="genres[]" value="War"/><label>War</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Action & Adventure"/><label>Action & Adventure</label>
+                                  <input type="checkbox" name="genres[]" value="Kids"/><label>Kids</label>
+                                  <input type="checkbox" name="genres[]" value="News"/><label>News</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Reality"/><label>Reality</label>
+                                  <input type="checkbox" name="genres[]" value="Sci-Fi & Fantasy"/><label>Sci-Fi & Fantasy</label>
+                                  <input type="checkbox" name="genres[]" value="Talk"/><label>Talk</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Soap"/><label>Soap</label>
+                                  <input type="checkbox" name="genres[]" value="War & Politics"/><label>War & Politics</label>
+                                  <input type="checkbox" name="genres[]" value="TV Movie"/><label>TV Movie</label>
                                 </div>
                               </div>
                               
