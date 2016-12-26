@@ -8,8 +8,12 @@ and open the template in the editor.
     <head>
         <link href="styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="styles/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="styles/styleconnexion.css"/>
         <meta charset="UTF-8">
         <title></title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
         <header>
@@ -38,9 +42,102 @@ and open the template in the editor.
                         <a href=''>Profil</a>
                     </li>
                     <li class='col-lg-2 col-md-3 col-sm-3 col-xs-6'>
-                        <a href=''>S'identifier/S'inscrire</a>
+                        <a href='' data-toggle="modal" data-target="#myModal">S'identifier/S'inscrire</a>
                     </li>
                 </ul>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">       
+                        <div id="global">
+
+                          <!-- Panel for connection -->
+                          <div class="panel">
+                            <form action="personal-space.php" method="post">
+                              <div>
+                                <div>
+                                  <label for="identifier1">Identifiant</label>
+                                  <input type="text" id="identifier1" name="identifier1" size="20"/>
+                                </div>
+                                <div>
+                                  <label for="password1">Mot de passe</label>
+                                  <input type="password" id="password1" name="password1"/>
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <input type="submit" id="connection" value="Connexion"/>
+                              </div>
+                            </form>
+                          </div>
+
+                        
+                          <!-- Panel for subscription -->
+                          <div class="panel">
+                            <form action="registration.php" method="post">
+                              <div id="credentials">
+                                <div>
+                                  <label for="identifier2">Nom d'utilisateur</label>
+                                  <input type="text" id="identifier2" name="identifier2" size="20"/>
+                                </div>
+                                <div>
+                                  <label for="password2">Mot de passe</label>
+                                  <input type="password" id="password2" name="password2"/>
+                                </div>
+                                <div>
+                                  <label for="password3">Confirmation</label>
+                                  <input type="password" id="password3" name="password3"/>
+                                </div>
+                                <div>
+                                  <label for="email">Adresse email</label>
+                                  <input type="text" id="email" name="email"/>
+                                </div>
+                              </div>
+                              
+                              <div id="newsletterDiv">
+                                <input type="checkbox" id="newsletter" name="newsletter"/><label for="newsletter">Recevoir des mails de la part du site</label>
+                              </div>
+                              
+                              <!-- Choice of genres -->
+                              <p>
+                                Votre style de musique :
+                              </p>
+                            
+                              <div id="genres">
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="blues"/><label>Blues</label>
+                                  <input type="checkbox" name="genres[]" value="classique"/><label>Classique</label>
+                                  <input type="checkbox" name="genres[]" value="country"/><label>Country</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="electro"/><label>Electro</label>
+                                  <input type="checkbox" name="genres[]" value="hiphop"/><label>Hip Hop</label>
+                                  <input type="checkbox" name="genres[]" value="jazz"/><label>Jazz</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="metal"/><label>Metal</label>
+                                  <input type="checkbox" name="genres[]" value="pop"/><label>Pop</label>
+                                  <input type="checkbox" name="genres[]" value="reggae"/><label>Reggae</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="rnb"/><label>RNB</label>
+                                  <input type="checkbox" name="genres[]" value="rock"/><label>Rock</label>
+                                  <input type="checkbox" name="genres[]" value="soul"/><label>Soul</label>
+                                </div>
+                              </div>
+                              
+                              <div id="subscription">
+                                <input type="submit" value="S'inscrire"/>
+                              </div>            
+                            </form>
+                          </div>
+                        </div>
+                    </div>           
+                </div>
+
+
+
                 <div class="col-xs-12 col-md-12 col-sm-12 col-lg-4" id="recherche">
                     <form>
                         <input type="text"  value="rechercher"/>
