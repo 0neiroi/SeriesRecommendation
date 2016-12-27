@@ -1,8 +1,9 @@
 <?php
-// on se connecte à notre base
+// connexion à la bdd
 require 'base.php';
 $connection->exec("SET NAMES 'utf8'");
 ?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -11,11 +12,9 @@ $connection->exec("SET NAMES 'utf8'");
 </head>
 
 <header>
-<!--En tête-->
 </header>
 
 <body>
-<!--Corps-->
 <?php
 // lancement de la requete
 $sql = 'SELECT name FROM series WHERE id = "36"';
@@ -37,7 +36,6 @@ Le titre de la série est :<br />
 </body>
 
 <footer>
-<!--Pied de page-->	
 </footer>
 
 </html>
