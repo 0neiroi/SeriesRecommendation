@@ -6,7 +6,6 @@
 require 'base.php';
 $connection->exec("SET NAMES 'utf8'");
 
-echo $id;
 
 // lancement de la requete
 $sql = 'SELECT * FROM series WHERE id = ?;';
@@ -15,7 +14,10 @@ $sql = 'SELECT * FROM series WHERE id = ?;';
 $req = $connection->prepare($sql); 
 
 $idurl = $_GET['id']; 
+<<<<<<< HEAD
 echo $idurl;
+=======
+>>>>>>> 0697b252005a37c693bfbee127a362e7138ec84f
 $req->bindValue(1, $idurl, PDO::PARAM_STR);
 $req->execute();
 
