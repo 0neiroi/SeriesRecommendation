@@ -1,20 +1,9 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title></title>
-</head>
-
-<header>
-</header>
-
-<body>
 <?php
-
-
 // connexion à la bdd
 require 'base.php';
 $connection->exec("SET NAMES 'utf8'");
+
+echo $id;
 
 // lancement de la requete
 $sql = 'SELECT * FROM series WHERE id = ?;';
@@ -22,8 +11,8 @@ $sql = 'SELECT * FROM series WHERE id = ?;';
 // on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
 $req = $connection->prepare($sql); 
 
-
-
+$idurl = $_GET['id']; 
+echo $idurl;
 $req->bindValue(1, "36", PDO::PARAM_STR);
 $req->execute();
 
@@ -33,6 +22,19 @@ $ligne = $rows[$i];
 }
 
 ?>
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title><?php echo $ligne['name']; ?></title>
+</head>
+
+<header>
+</header>
+
+<body>
+
 
 
 <h1>
@@ -49,7 +51,7 @@ $ligne = $rows[$i];
 <div id="infos">
 	<p>Backdrop path : <img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path'] ?>" alt="Chemin" /></p>
 	<p>Overview : <?php echo $ligne['overview']; ?><p>
-	<p>Homepage : <a href= '<?php $ligne['homepage'] ?>'></a></p>
+	<p><a href= '<?php $ligne['homepage'] ?>'>Homepage</a></p>
 	<p>First air date : <?php echo $ligne['first_air_date']; ?></p>
 	<p>Last air date : <?php echo $ligne['last_air_date']; ?></p>
 	<p>In production : <?php echo $ligne['in_production']; ?></p>

@@ -25,7 +25,7 @@ function loadJSONDoc(){
 	};
 
 	// Initialize request
-	xmlhttp.open("GET", "http://localhost/L3/projet/SeriesRecommendation/script/series.php", true);
+	xmlhttp.open("GET", "http://localhost/githubProject/SeriesRecommendation/script/series.php", true);
 	 /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
   //  xmlhttp.open("GET", "script/series.php", true); il faut faire attention au chemin. ici, les deux scripts sont dans le même répertoire ;)
   // My bad, en fait il faut mettre le protocole et le chemin entier ... pourquoi ? je ne sais pas.
@@ -40,16 +40,20 @@ function loadJSONDoc(){
 function insert(obj){
 	// pour chaque série présente dans le tableau retourné en JSON, on va afficher le titre de la série dans une liste
 	for (var i=0;i<obj.series.length;i++){
-		// on récupère la liste où seront affichées les séries
-		var container = document.getElementById("listeSeries");
-		// on crée une nouvelle puce dans la liste
-		var newli = document.createElement("li");
-		// on attribue à cette puce le nom de la série
-		newli.innerHTML = obj.series[i].name;	
-		/*VALERE*/ // ^^^^^^^^^^^^^^^^ 
-		// newli.setAttribut("nom de l'attribut", valeur de l'attribue) sert à mettre des choses dans les balises 
-		// on ajoute la puce dans la liste
-		container.appendChild(newli);
+		// on récupère la div où seront affichées les séries
+		var container = document.getElementById("affichageSeries");
+		// on crée une nouvelle balise p où seront écrits les titres
+		var newp = document.createElement("p");
+		// on veut ajouter le titre sous forme de lien
+		var newa = document.createElement("a");
+		// on fait le lien avec seriebis.php qui contiendra les infos de la série
+		newa.setAttribute('href','script/seriebis.php?id='+obj.series[i].id);
+		// on attribue à p le nom de la série
+		newa.innerHTML = obj.series[i].name;
+		// on ajoute le lien dans p
+		newp.appendChild(newa);
+		// on ajoute le p dans la div
+		container.appendChild(newp);
 	}
 
 }
