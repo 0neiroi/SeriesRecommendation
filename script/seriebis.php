@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="fr">
+
 <?php
 // connexion à la bdd
 require 'base.php';
@@ -13,7 +16,7 @@ $req = $connection->prepare($sql);
 
 $idurl = $_GET['id']; 
 echo $idurl;
-$req->bindValue(1, "36", PDO::PARAM_STR);
+$req->bindValue(1, $idurl, PDO::PARAM_STR);
 $req->execute();
 
 $rows = $req->fetchAll();
@@ -23,8 +26,6 @@ $ligne = $rows[$i];
 
 ?>
 
-<!doctype html>
-<html lang="fr">
 <head>
   <meta charset="utf-8">
   <title><?php echo $ligne['name']; ?></title>
