@@ -3,7 +3,6 @@
 require 'base.php';
 $connection->exec("SET NAMES 'utf8'");
 
-echo $id;
 
 // lancement de la requete
 $sql = 'SELECT * FROM series WHERE id = ?;';
@@ -12,8 +11,7 @@ $sql = 'SELECT * FROM series WHERE id = ?;';
 $req = $connection->prepare($sql); 
 
 $idurl = $_GET['id']; 
-echo $idurl;
-$req->bindValue(1, "36", PDO::PARAM_STR);
+$req->bindValue(1, $idurl, PDO::PARAM_STR);
 $req->execute();
 
 $rows = $req->fetchAll();

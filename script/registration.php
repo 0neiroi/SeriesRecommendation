@@ -1,3 +1,93 @@
+<?php
+  // Connect to the database
+  require('base.php');
+  /**
+   * Test if a character $c is in a string $s.
+   */
+  function contains($c, $s){
+    for ($i = 0; $i < strlen($s); $i++){
+      if ($s[$i] == $c){
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Check the availability of a user name.
+   */
+  function checkUserName($connection, $username){
+    $query = "SELECT COUNT(*) AS count FROM users WHERE name=:username";
+    $statement = $connection->prepare($query);
+    $statement->bindValue(":username", $username, PDO::PARAM_STR);
+    $statement->execute();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    return $row["count"] == "0";
+  }
+
+  /**
+   * Put a user in the user table.
+   */
+  function addUser($connection, $username, $email, $cryptedPw, $salt, $get_emails){
+    $query = "INSERT INTO users (name, email, password, salt, gets_emails) VALUES (:username, :email, :cryptedPw, :salt, :get_emails)";
+    //$query = "INSERT INTO users (name, email, password, salt, gets_emails) VALUES ($username, $email, $cryptedPw, $salt, $get_emails);";
+  /* $statement = $connection->prepare($query);
+    $statement->bindValue(":username", $username, PDO::PARAM_STR);
+    $statement->bindValue(":email", $email, PDO::PARAM_STR);
+    $statement->bindValue(":cryptedPw", $cryptedPw, PDO::PARAM_STR);
+    $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
+    $statement->bindValue(":get_emails", $get_emails, PDO::PARAM_INT); 
+    $OK = $statement->execute();
+
+    return $OK;
+*/
+    try{
+      $statement = $connection->prepare($query);
+      $statement->bindValue(":username", $username, PDO::PARAM_STR);
+      $statement->bindValue(":email", $email, PDO::PARAM_STR);
+      $statement->bindValue(":cryptedPw", $cryptedPw, PDO::PARAM_STR);
+      $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
+      $statement->bindValue(":get_emails", $get_emails, PDO::PARAM_INT);
+      $OK = $statement->execute();
+      print_r($statement->errorInfo());
+    }  catch (Exception $e) {
+      $e->getMessage();
+    }
+    return $OK;  
+  }
+  
+
+  /**
+   * Put the genres of a user in the users_genres table.
+   */
+  function addGenres($connection, $userid, $genres){
+    $query = "INSERT INTO usersgenre (user_id, genre) VALUES (:userid, :genre)";
+    $statement = $connection->prepare($query);
+    $statement->bindValue(":userid", $userid);
+    for ($i = 0; $i < sizeof($genres); $i++){
+      $statement->bindValue(":genre", $genres[$i]);
+      $OK = $statement->execute();
+      if (!$OK){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Generate an alphanumeric string.
+   */
+  function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+      $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +101,6 @@
     <div class="panel">
 
       <?php
-        // Connect to the database
-        require('base.php');
 
         // A boolean for the validity of the user input
         $valid = true;
@@ -122,76 +210,3 @@
   </div>
 </body>
 </html>
-
-<!-- PHP functions -->
-<?php
-  /**
-   * Test if a character $c is in a string $s.
-   */
-  function contains($c, $s){
-    for ($i = 0; $i < strlen($s); $i++){
-  	  if ($s[$i] == $c){
-        return true;
-	    }
-    }
-    return false;
-  }
-  
-  /**
-   * Check the availability of a user name.
-   */
-  function checkUserName($connection, $username){
-    $query = "SELECT COUNT(*) AS count FROM users WHERE name=:username";
-    $statement = $connection->prepare($query);
-    $statement->bindValue(":username", $username, PDO::PARAM_STR);
-    $statement->execute();
-    $row = $statement->fetch(PDO::FETCH_ASSOC);
-    return $row["count"] == "0";
-  }
-
-  /**
-   * Put a user in the user table.
-   */
-  function addUser($connection, $username, $email, $cryptedPw, $salt, $get_emails){
-    $query = "INSERT INTO users (name, email, password, salt, gets_emails) VALUES (:username, :email, :cryptedPw, :salt, :get_emails)";
-    $statement = $connection->prepare($query);
-    $statement->bindValue(":username", $username, PDO::PARAM_STR);
-    $statement->bindValue(":email", $email, PDO::PARAM_STR);
-    $statement->bindValue(":cryptedPw", $cryptedPw, PDO::PARAM_STR);
-    $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
-    $statement->bindValue(":get_emails", $get_emails, PDO::PARAM_INT);
-    $OK = $statement->execute();
-    echo mysql_error();
-    return $OK;
-  }
-
-  /**
-   * Put the genres of a user in the users_genres table.
-   */
-  function addGenres($connection, $userid, $genres){
-    $query = "INSERT INTO usersgenre (user_id, genre) VALUES (:userid, :genre)";
-    $statement = $connection->prepare($query);
-    $statement->bindValue(":userid", $userid);
-    for ($i = 0; $i < sizeof($genres); $i++){
-      $statement->bindValue(":genre", $genres[$i]);
-      $OK = $statement->execute();
-      if (!$OK){
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Generate an alphanumeric string.
-   */
-  function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-      $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-  }
-?>
