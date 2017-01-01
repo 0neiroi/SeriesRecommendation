@@ -25,7 +25,7 @@ function loadJSONDoc(){
 	};
 
 	// Initialize request
-	xmlhttp.open("GET", "http://localhost/githubProject/SeriesRecommendation/script/series.php", true);
+	xmlhttp.open("GET", "http://localhost/L3/projet/SeriesRecommendation/script/series.php", true);
 	 /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
   //  xmlhttp.open("GET", "script/series.php", true); il faut faire attention au chemin. ici, les deux scripts sont dans le même répertoire ;)
   // My bad, en fait il faut mettre le protocole et le chemin entier ... pourquoi ? je ne sais pas.
@@ -39,13 +39,13 @@ function loadJSONDoc(){
  */
 function insert(obj){
 	// pour chaque série présente dans le tableau retourné en JSON, on va afficher le titre de la série dans une liste
-	for (var i=0;i<obj.project.length;i++){
+	for (var i=0;i<obj.series.length;i++){
 		// on récupère la liste où seront affichées les séries
 		var container = document.getElementById("listeSeries");
 		// on crée une nouvelle puce dans la liste
 		var newli = document.createElement("li");
 		// on attribue à cette puce le nom de la série
-		newli.innerHTML = obj.project[i].name;	
+		newli.innerHTML = obj.series[i].name;	
 		/*VALERE*/ // ^^^^^^^^^^^^^^^^ 
 		// newli.setAttribut("nom de l'attribut", valeur de l'attribue) sert à mettre des choses dans les balises 
 		// on ajoute la puce dans la liste

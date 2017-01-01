@@ -86,8 +86,10 @@
           // Gets emails?
           if (isset($_POST['newsletter']) && $_POST['newsletter'] == "on"){
             $get_emails = true;
+            echo "oui je suis là";
           }
           else{
+            echo "oui je suis ici";
             $get_emails = false;
           }
 
@@ -95,6 +97,7 @@
           $userOK = addUser($connection, $username, $email, $cryptedPw, $salt, $get_emails);
 	
           if ($userOK){
+            echo "oui je suis perdu";
             // Add the user genres
             $userid = $connection->lastInsertId();
             $genresOK = addGenres($connection, $userid, $genres);
@@ -103,6 +106,8 @@
               echo "<p>L'inscription a été réalisée avec succès.</p>";
               echo '<p><a href="formular.html">Retour vers la page d\'accueil.</a></p>';
             }
+          }else{
+            echo "oui je suis vraiment perdu";
           }
         }
   
@@ -156,6 +161,7 @@
     $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
     $statement->bindValue(":get_emails", $get_emails, PDO::PARAM_INT);
     $OK = $statement->execute();
+    echo mysql_error();
     return $OK;
   }
 

@@ -1,7 +1,10 @@
 body{
   font-family : "Lucida Sans Unicode";
-  color : white;
+  color : lightgrey;
   background-image: url("./background.jpg");
+}
+input{
+ color:black;
 }
 
 #global{
