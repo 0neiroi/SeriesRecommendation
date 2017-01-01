@@ -183,7 +183,7 @@ and open the template in the editor.
 
 	// Character encoding of the database
 	$connection->exec("SET NAMES 'utf8'");
-	require 'indexation.php';
+	//require 'indexation.php';
 	$search = "";
 	if (isset($_GET['search'])){
     	$search = $_GET['search'];
@@ -192,10 +192,11 @@ and open the template in the editor.
 
 	$query = "SELECT *
 FROM series
-WHERE MATCH(original_name, name) AGAINST (':search');";
+WHERE original_name LIKE :search OR name LIKE :search;";
 	$statement = $connection->prepare($query);
 	$statement->bindValue(":search", $search, PDO::PARAM_STR);
 	$statement->execute();
+	 //print_r($statement->errorInfo());
 echo "<div>Resultat de la recherche :";
 				echo "<ul>";
 	$rows = $statement->fetchAll();
@@ -203,7 +204,8 @@ echo "<div>Resultat de la recherche :";
 				for ($i = 0; $i < sizeof($rows); $i++){
 					$row2 = $rows[$i];
 					$genres[$i] = $row2['name'];
-					echo "<li>".$row2['name']."</li>";
+					//echo var_dump($row2['id']);
+					echo "<li><a href='seriebis.php?id=".$row2['id']."'>".$row2['name']."</a></li>";
 				}
 				echo "</ul></div>";
 
