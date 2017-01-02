@@ -63,8 +63,15 @@ and open the template in the editor.
             // on affiche le nom de l'utilisateur a partir de son id transmi a la connection
             $req = $connection->prepare('SELECT name FROM users WHERE id = ?');
             $req->execute(array($_GET['id']));
-            $donnee = $req->fetch();
-            echo $donnee;
+            $donnee = $req->fetchAll();
+				$genres = array();
+				for ($i = 0; $i < sizeof($donnee); $i++){
+					$donnee2 = $donnee[$i];
+					$genres[$i] = $donnee2['name'];
+					//echo var_dump($row2['id']);
+					echo $donnee2['name'];
+				}
+            //echo $donnee;
             ?></h1>
         <p> Vos séries en cours:</p>
         <?php
@@ -79,12 +86,15 @@ and open the template in the editor.
                 )
                 )
                 )');
-        $name->execute(execute(array($_GET['id'])));
+        $idurl = $_GET['id'];
+        $name->bindValue(1, $idurl, PDO::PARAM_STR);
+		$name->execute();
+        
         $user_id = $_GET['id'];
         if(($donnees = $name->fetch())==FALSE){
-            ?>
-        <p> Vous n'avez commencé aucune série.</p>
-        <?php 
+   
+        echo "<p> Vous n'avez commencé aucune série.</p>";
+        
         }else{
             do{
         
@@ -116,19 +126,21 @@ and open the template in the editor.
                                             SELECT episode_id FROM usersepisodes WHERE user_id= "' . $user_id . '"
                                             ');
             $ep_max=$episode_max->fetch();
-            ?>
-        <p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes <?php echo $ep_max['number']?> </p>
-        <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison <?php echo $max_s['number']?></p>
-        <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de <?php $données['name']?>.</p>
-        
-        <?php 
+        	echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['number']." </p>";
+	        echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison ".$max_s['number']."</p>";
+	        echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$données['name']."</p>";
+	        
             }while ($donnees = $name->fetch());
+            $name->closeCursor();
+        	$season_max->closeCursor();
+        	$episode_max->closeCursor();
         }
-        $name->closeCursor();
-        $season_max->closeCursor();
-        $episode_max->closeCursor();?>
+
+        
+
+        ?>
         <!-- on créer un formulaire pour que l'utilisateur puisse ajouter ce qu'il a vu dernierement -->
-        <form method="post" action="series_utilisateur.php">
+        <form method="post" action="script/verification.php">
             
             <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-3'>J'ai vu l'épisode <input type='number' name='numepisode'/> </p>
             <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison <input type='number' name='numsaison'/> </p>
@@ -136,45 +148,7 @@ and open the template in the editor.
             <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12 col-sm-offset-6'><input type="submit" value="OK"/></p>
             
         </form>
-        <?php
-        // on verifie si ce qu'il a regardé existe dans la base de données
-        $reqserie=$connection->query('SELECT name FROM serie WHERE name="'.$POST['serie'].'"');
-        $reqsaison=$connection->query('SELECT number FROM season WHERE id=
-(SELECT season_id FROM seriesseasons WHERE serie_id =
-(SELECT serie_id FROM serie WHERE name="'.$POST['serie'].'")) AND number="'.$POST['numsaison'].'"
-');
-        $reqepisode=$connection->query('SELECT number FROM episodes WHERE id=
-( SELECT episode_id FROM seasonsepisode WHERE season_id=
-(SELECT season_id FROM seriesseasons WHERE serie_id=
-(SELECT id FROM serie WHERE name="'.$POST['serie'].'") 
-AND season_id=
-(SELECT id FROM seasons WHERE number="'.$POST['numsaison'].'"))) 
-AND id = "'.$POST['numepisode'].'" 
-');
-        $repserie=$reqserie->fetchAll();
-        $repsaison=$reqsaison->fetchAll();
-        $repepisode=$reqepisode->fetchAll();
-        if(count($repserie)==0 || count($repsaison)==0 || count($repepisode)==0 ){       
-        ?>
-        <p>
-            Ce que vous cherchez n'existe pas dans la base de données
-        </p>
-        <?php
-        }else{ // si ce qu'il a entré existe on va chercher l'id de l'episode puis on l'ajoute a la table usersepisodes en face de l'id de cet utilisateur
-            $episode_id=$connection->query('SELECT id FROM episode WHERE number="'.$POST['numepisode'].'" AND id=
-(SELECT episode_id FROM seasonsepisodes WHERE season_id=
-(SELECT season_id FROM seriesseasons WHERE season_id=
-( SELECT id FROM seasons WHERE number="'.$POST['numsaison'].'")
- AND serie_id=
-(SELECT serie_id FROM series WHERE name="'.$POST['serie'].'")))
-');
-            $nouvelepisode=$connection->prepare('INSERT INTO usersepisodes (user_id, episode_id,) VALUES (:user_id,;episode_id');
-            $nouvelepisode->execute(array(
-                'user_id'=>$user_id,
-                'episode_id'=>$episode_id->fetch(),
-            ));
-        }
-        ?>
+        
 <footer class="row">
             <div class='row'>
                 <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> <p>Desciption du site</p></div>
