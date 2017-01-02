@@ -25,8 +25,10 @@ $ligne = $rows[$i];
 ?>
 
 <head>
-  <meta charset="utf-8">
-  <title><?php echo $ligne['name']; ?></title>
+  	<meta charset="utf-8">
+  	<link href="styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+  	<title><?php echo $ligne['name']; ?></title>
 </head>
 
 <header>
