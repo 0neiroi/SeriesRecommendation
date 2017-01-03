@@ -185,47 +185,51 @@ and open the template in the editor.
 
 
         </header>
-
-        <div id="corps" class="row panel panel-default">
-            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 panel-body">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row ">
+            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 ">
                 <?php
-	// Connect to the database
-	require 'base.php';
+                  // Connect to the database
+                  require 'base.php';
 
-	// Character encoding of the database
-	$connection->exec("SET NAMES 'utf8'");
-	//require 'indexation.php';
-	$search = "";
-	if (isset($_GET['search'])){
-    	$search = $_GET['search'];
-  }
+                  // Character encoding of the database
+                  $connection->exec("SET NAMES 'utf8'");
+                  //require 'indexation.php';
+                  $search = "";
+                  if (isset($_GET['search'])){
+                      $search = $_GET['search'];
+                  }
 
 
-	$query = "SELECT DISTINCT series.name, series.id FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR
- series.original_name LIKE :search OR series.name LIKE :search;";
-	$statement = $connection->prepare($query);
-	$statement->bindValue(":search", $search, PDO::PARAM_STR);
-	$statement->execute();
-	 //print_r($statement->errorInfo());
-echo "<div>Resultat de la recherche :";
-				echo "<ul>";
+                  $query = "SELECT DISTINCT series.name, series.id FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR series.original_name LIKE :searchIntegral OR series.name LIKE :searchIntegral;";
+                  $statement = $connection->prepare($query);
+                  $statement->bindValue(":searchIntegral", '%'.$search.'%', PDO::PARAM_STR);
+                  $statement->bindValue(":search", $search, PDO::PARAM_STR);
+                  $statement->execute();
+                   //print_r($statement->errorInfo());
+                  echo "Resultat de la recherche :";
+                        echo "<ul>";
 
-	$rows = $statement->fetchAll();
-				$genres = array();
-				for ($i = 0; $i < sizeof($rows); $i++){
-					$row2 = $rows[$i];
-					$genres[$i] = $row2['name'];
-					//echo var_dump($row2['id']);
-					echo "<li><a href='seriebis.php?id=".$row2['id']."'>".$row2['name']."</a></li>";
-				}
-				echo "</ul></div>";
+                  $rows = $statement->fetchAll();
+                        $genres = array();
+                        for ($i = 0; $i < sizeof($rows); $i++){
+                          $row2 = $rows[$i];
+                          $genres[$i] = $row2['name'];
+                          //echo var_dump($row2['id']);
+                          echo "<li><a href='seriebis.php?id=".$row2['id']."'>".$row2['name']."</a></li>";
+                        }
+                        echo "</ul>";
 
-?>
+                ?>
             </div>
             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
                 <!-- <img src=recuperer les images de chaque saison alt= saison x /> -->
             </div>
+        </div>    
+          </div>
         </div>
+        
         <footer class="row">
             <div class='row'>
                 <div class='col-lg-2 col-md-2 col-sm-2'></div> 
