@@ -10,7 +10,7 @@ and open the template in the editor.
         <link href="../styles/style.css" rel="stylesheet">
         <link rel="stylesheet" href="../styles/styleconnexion.css"/>
         <meta charset="UTF-8">
-        <title>Personal Space</title>
+        <title>Personal Space | Series Choice</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -268,7 +268,7 @@ and open the template in the editor.
               }
           ?>
           <!-- on créer un formulaire pour que l'utilisateur puisse ajouter ce qu'il a vu dernierement -->
-          <form method="post" action="script/verification.php">
+          <form method="post" action="verification.php?id=<?php echo $_GET['id'];?>">
               
               <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-3'>J'ai vu l'épisode <input type='number' name='numepisode'/> </p>
               <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison <input type='number' name='numsaison'/> </p>
