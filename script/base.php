@@ -3,13 +3,13 @@
   $dbhost = "localhost"; 
   
   // Name of the database
-  $dbname = "project";
+  $dbname = "series";
   
   // User name
-  $dbuser = "ascgukp";
+  $dbuser = "anonymous";
   
   // Password (not used here)
-  $dbpass = "qwsefvgy7uk";
+  $dbpass = "anonymous";
  
   try {
     $connection = new PDO('mysql:host='.$dbhost.';dbname='.$dbname, $dbuser, $dbpass);

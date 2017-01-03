@@ -335,7 +335,7 @@ and open the template in the editor.
                     </div>
                     <div class='row'>
                         <div class="col-lg-6 col-md-6 col-sd-6 col-xs-6">
-                            <a href='#navbar'>Back up</a>
+                            <a href='#'>Back up</a>
                         </div>
                     </div>
             </div>
