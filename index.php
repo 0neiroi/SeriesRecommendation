@@ -343,6 +343,8 @@ and open the template in the editor.
             <div class="row">
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id="copyright"> 
                     <p>Copyright</p>
+                    <p>CHOLEZ - CULARD - NUCERA - RICHIER</p>
+                    <p>L3 MIASHS Siences Cognitives </p>                    
                 </div>
             </div>				
         </footer>
