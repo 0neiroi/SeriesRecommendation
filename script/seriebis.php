@@ -244,7 +244,7 @@ and open the template in the editor.
 <div class="panel panel-default">
 <div id="infos" class="panel-body">
 
-<div id="poster" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+<div id="poster" class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
     <a href='' data-toggle="modal" data-target="#myModal2"><img class="img-rounded img-responsive" src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['poster_path'] ?>" alt="Affiche de la série" /></a>
 </div>
 
@@ -260,7 +260,7 @@ and open the template in the editor.
 
 
 <!-- Affichage des infos relatives à la série -->
-<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+<div class="col-lg-10 col-md-9 col-sm-6 col-xs-10">
     <!-- <p>Backdrop path : <img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path'] ?>" alt="Chemin" /></p> -->
   <p>Overview : <?php echo $ligne['overview']; ?><p>
   <p><a href= '<?php echo $ligne['homepage']; ?>'>Homepage</a></p>
