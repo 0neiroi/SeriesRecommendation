@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -54,7 +57,14 @@ and open the template in the editor.
 				</form>
 			    <ul class="nav navbar-nav navbar-right">
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			      <li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			      <?php  
+			      	if (isset($_SESSION["username"])){
+			      		echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
+			}else{
+				echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+			}            	
+			      ?>
+			      
 			    </ul>
 			  </div>
 			</nav>
@@ -199,7 +209,15 @@ and open the template in the editor.
           <?php
             // on affiche le nom de l'utilisateur a partir de son id transmi a la connection
             $req = $connection->prepare('SELECT name FROM users WHERE id = ?');
-            $req->execute(array($_GET['id']));
+
+            if (isset($_SESSION["username"])){
+
+				$id = $_SESSION["id"];
+            	$req->execute(array($id));
+			}else{
+				echo "<p class='error'>Erreur d'authentification. Retournez sur la page d'accueil et essayez à nouveau de nous connecter.</p>";
+				echo '<p><a href="../">Retour vers la page d\'accueil..</a></p>';
+			}            	
             $donnee = $req->fetchAll();
   				  $genres = array();
   				  for ($i = 0; $i < sizeof($donnee); $i++){
@@ -215,11 +233,13 @@ and open the template in the editor.
           <?php
           // on va chercher le nom des séries que l'utilisateur a vues
             $name = $connection->prepare('SELECT DISTINCT name FROM series INNER JOIN seriesseasons ON series.id=seriesseasons.series_id INNER JOIN seasonsepisodes ON seriesseasons.season_id=seasonsepisodes.season_id INNER JOIN usersepisodes ON seasonsepisodes.episode_id=usersepisodes.episode_id WHERE user_id=?;');
-                   
-            $idurl = $_GET['id'];
-            $name->bindValue(1, $idurl, PDO::PARAM_STR);
+             
+            if (isset($_SESSION["username"])){
+
+				$user_id = $_SESSION["id"];
+				 $name->bindValue(1, $user_id, PDO::PARAM_STR);
   		      $name->execute();
-            $user_id = $_GET['id'];
+            
             if(($donnees = $name->fetch())==FALSE){
               echo "<p> Vous n'avez commencé aucune série.</p>";
             }else{
@@ -249,6 +269,13 @@ and open the template in the editor.
                 $season_max->closeCursor();
                 $episode_max->closeCursor();
               }
+			}else{
+				echo "<p class='error'>Erreur d'authentification. Retournez sur la page d'accueil et essayez à nouveau de nous connecter.</p>";
+				echo '<p><a href="../">Retour vers la page d\'accueil..</a></p>';
+			}            	
+            
+            
+           
           ?>
           <!-- on créer un formulaire pour que l'utilisateur puisse ajouter ce qu'il a vu dernierement -->
           <form method="post" action="verification.php?id=<?php echo $_GET['id'];?>">

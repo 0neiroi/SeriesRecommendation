@@ -3,6 +3,8 @@
 require 'script/base.php';
 $connection->exec("SET NAMES 'utf8'");
 
+session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +63,13 @@ and open the template in the editor.
 				</form>
 			    <ul class="nav navbar-nav navbar-right">
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			      <li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			      <?php  
+              if (isset($_SESSION["username"])){
+                echo '<li><a href="script/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
+      }else{
+        echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+      }             
+            ?>
 			    </ul>
 			  </div>
 			</nav>

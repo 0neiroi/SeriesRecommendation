@@ -63,7 +63,13 @@ and open the template in the editor.
 				</form>
 			    <ul class="nav navbar-nav navbar-right">
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-			      <li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			      <?php  
+              if (isset($_SESSION["username"])){
+                echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
+      }else{
+        echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
+      }             
+            ?>
 			    </ul>
 			  </div>
 			</nav>
@@ -194,7 +200,7 @@ and open the template in the editor.
 
         </header>
 
-        <div id="corps" class="row panel panel-default">
+        <div class="row panel panel-default">
             <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 panel-body">
 
 			<?php
@@ -210,11 +216,11 @@ and open the template in the editor.
 				$statement->bindValue(":username", $username, PDO::PARAM_STR);
 				$statement->execute();
 				$row = $statement->fetch(PDO::FETCH_ASSOC);
-
 				// If successful, add the username to a session variable
-				if ($row && $row['password'] == hash('sha384', $password.$row['salt'])) {
+        
+				if ($row['password'] == hash('sha384', $password.$row['salt'])) {
 					$_SESSION["username"] = $username;
-					header('Location: series_utilisateur.php?id=$row["id"]');
+          $_SESSION["id"] = $row['id'];
 				}
 			}
 
@@ -244,7 +250,7 @@ and open the template in the editor.
 				// Get genre information and display
 				echo "<div>Genres favoris :";
 				echo "<ul>";
-				$query2 = "SELECT genre FROM users, users_genres WHERE users.user_id = users_genres.user_id AND users.name=:username";
+				$query2 = "SELECT genre FROM users, usersgenre WHERE users.id = usersgenre.user_id AND users.name=:username";
 				$statement2 = $connection->prepare($query2);
 				$statement2->bindValue(":username", $username, PDO::PARAM_STR);
 				$statement2->execute();
