@@ -11,10 +11,12 @@ $sql = 'SELECT * FROM series WHERE id = ?;';
 // on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
 $req = $connection->prepare($sql); 
 
+// on récupère l'id de la série contenu dans l'url et on l'ajoute à la requete
 $idurl = $_GET['id']; 
 $req->bindValue(1, $idurl, PDO::PARAM_STR);
 $req->execute();
 
+// stockage des éléments de la requête
 $rows = $req->fetchAll();
 for ($i = 0; $i < sizeof($rows); $i++){
 $ligne = $rows[$i];
@@ -34,6 +36,7 @@ and open the template in the editor.
         <link href="../styles/style.css" rel="stylesheet">
         <link rel="stylesheet" href="../styles/styleconnexion.css"/>
         <meta charset="UTF-8">
+        <!-- affichage du titre de la série -->
         <title><?php echo $ligne['name']; ?> | Series Choice</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -43,9 +46,8 @@ and open the template in the editor.
         <header>
             <marquee>
                 <div class="row">
-                    <div class="col-lg-10 col-xs-10"><!--mettre plein d'images ici--> 
-                    	
-					</div>
+                  <div class="col-lg-10 col-xs-10"><!--mettre plein d'images ici-->  	
+					        </div>
                 </div>
             </marquee>
 
@@ -252,7 +254,8 @@ and open the template in the editor.
                 <div class="modal fade" id="myModal2" role="dialog">
                     <div class="modal-dialog">       
                         <div id="global">
-      						<img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['poster_path'] ?>" alt="Affiche de la série"/>         	
+                          <!-- affichage de l'affiche de la série -->
+      						        <img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['poster_path'] ?>" alt="Affiche de la série"/>         	
                         </div>
                     </div>
                 </div>
@@ -261,7 +264,6 @@ and open the template in the editor.
 
 <!-- Affichage des infos relatives à la série -->
 <div class="col-lg-10 col-md-9 col-sm-6 col-xs-10">
-    <!-- <p>Backdrop path : <img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path'] ?>" alt="Chemin" /></p> -->
   <p>Overview : <?php echo $ligne['overview']; ?><p>
   <p><a href= '<?php echo $ligne['homepage']; ?>'>Homepage</a></p>
   <p>First air date : <?php echo $ligne['first_air_date']; ?></p>
@@ -294,16 +296,16 @@ and open the template in the editor.
                     <div class='row'>
                       <div class="social"> 
                           <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
-                            <img class='img-responsive' src="img/tw.png"/ alt="twitter">
+                            <img class='img-responsive' src="img/tw.png" alt="twitter">
                         </div>
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class="img-responsive"src="img/fb.png" alt="facebook"/>
+                            <img class="img-responsive" src="img/fb.png" alt="facebook"/>
                         </div >
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class='img-responsive' src='img/ins.png'alt="instagram"/>
+                            <img class='img-responsive' src='img/ins.png' alt="instagram"/>
                         </div>
-			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
-                            <img class='img-responsive' src='../img/logo-sc.png' alt=sciences-cognitives/>
+			                  <div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
+                            <img class='img-responsive' src='img/logo-sc.png' alt=sciences-cognitives/>
                         </div> 
                       </div> 
                     </div>
@@ -316,6 +318,8 @@ and open the template in the editor.
             <div class="row">
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id="copyright"> 
                     <p>Copyright</p>
+                    <p>CHOLEZ - CULARD - NUCERA - RICHIER</p>
+                    <p>L3 MIASHS Siences Cognitives </p>
                 </div>
             </div>				
         </footer>
