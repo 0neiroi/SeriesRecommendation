@@ -14,9 +14,6 @@
   // Build query
   $query = "SELECT * FROM series"; 
   
-  /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
-  //  $query = "SELECT * FROM project FROM series"; hm il faut faire un choix soit series soit project mais pas les deux 0:-) 
-
   // Sort by name
   if (isset($_GET['sort'])){
     if ($_GET['sort'] == "name"){
@@ -34,9 +31,9 @@
   $series = array();
   $series['series'] = $rows;
   echo json_encode($series, JSON_UNESCAPED_SLASHES);
-  // Version sans json_encode
-  // encode($series);
 
+
+  // fonction qui permet de créer le tableau qui contiendra les séries
   function encode($series){
     echo '{"series":[';
     $rows = $series['series'];

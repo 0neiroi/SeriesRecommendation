@@ -60,9 +60,9 @@ and open the template in the editor.
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
 			        <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-			          	<li><a href="script/search.php?search=action">Action</a></li>
-			          	<li><a href="script/search.php?search=adventure">Adventure</a></li>
-			          	<li><a href="script/search.php?search=fantasy">Fantasy</a></li>
+			          	  <li><a href="script/search.php?search=action">Action</a></li>
+			           	  <li><a href="script/search.php?search=adventure">Adventure</a></li>
+			             	<li><a href="script/search.php?search=fantasy">Fantasy</a></li>
                 		<li><a href="script/search.php?search=animation">Animation</a></li>
 		                <li><a href="script/search.php?search=drama">Drama</a></li>
         		        <li><a href="script/search.php?search=horror">Horror</a></li>
