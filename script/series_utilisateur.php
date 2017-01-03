@@ -214,16 +214,8 @@ and open the template in the editor.
           <p> Vos séries en cours:</p>
           <?php
           // on va chercher le nom des séries que l'utilisateur a vues
-            $name = $connection->prepare('SELECT name FROM series WHERE id=
-                   (
-                  SELECT DISTINCT serie_id FROM seriesseasons WHERE season_id=
-                  (
-                  SELECT DISTINCT season_id FROM seasonepisode WHERE episode_id=
-                  (
-                  SELECT episode_id FROM usersepisodes WHERE user_id=?
-                  )
-                  )
-                  )');
+            $name = $connection->prepare('SELECT DISTINCT name FROM series INNER JOIN seriesseasons ON series.id=seriesseasons.series_id INNER JOIN seasonsepisodes ON seriesseasons.season_id=seasonsepisodes.season_id INNER JOIN usersepisodes ON seasonsepisodes.episode_id=usersepisodes.episode_id WHERE user_id=?;');
+                   
             $idurl = $_GET['id'];
             $name->bindValue(1, $idurl, PDO::PARAM_STR);
   		      $name->execute();
@@ -233,34 +225,25 @@ and open the template in the editor.
             }else{
               do{
                 //pour chaque série que l'utilisateur regarde on va chercher la saison a laquelle il est et le dernier épisode qu'il a vu.
-                $season_max = $connection->query('SELECT MAX  number FROM seasons WHERE season_id=
-                               (
-                                 SELECT season_id FROM seriesseasons WHERE series_id=
-                                 (
-                                 SELECT id FROM series WHERE name=$name
-                                 )) 
-                           AND season_id=
-                                  (
-                                  SELECT DISTICT season_id FROM seasonsepisodes WHERE episode_id=
-                                  (
-                                   SELECT episode_id FROM usersepisodes WHERE user_id="' . $user_id . '"))');
+                $query = "SELECT DISTINCT MAX(seasons.number) FROM seasons INNER JOIN seriesseasons ON seasons.id=seriesseasons.season_id INNER JOIN series ON seriesseasons.series_id=series.id INNER JOIN seasonsepisodes ON seriesseasons.season_id=seasonsepisodes.season_id INNER JOIN usersepisodes ON seasonsepisodes.episode_id=usersepisodes.episode_id WHERE series.name=:name AND user_id=:user;";
+
+                $season_max = $connection->prepare($query);
+                $season_max->bindValue(":name", $donnees['name'], PDO::PARAM_STR);
+            	$season_max->bindValue(":user", $user_id, PDO::PARAM_STR);
+            	$season_max->execute();
                 $max_s = $season_max->fetch();
-                $episode_max = $connection->query('SELECT MAX number FROM episodes WHERE id=(SELECT episode_id FROM seasonsepisodes WHERE season_id=
-                                              (
-                                              SELECT season_id FROM seasons WHERE  number="' . $max_s['number'] . '"
-                                              AND id=
-                                              (
-                                              SELECT season_id FROM seriesseasons WHERE series_id=
-                                              (
-                                              SELECT id FROM serie WHERE name="' . $donnees['name'] . '"))))
-                                          AND id=
-                                              (
-                                              SELECT episode_id FROM usersepisodes WHERE user_id= "' . $user_id . '"
-                                              ');
+                $query = "SELECT DISTINCT MAX(episodes.number) FROM episodes INNER JOIN seasonsepisodes ON episodes.id=seasonsepisodes.episode_id INNER JOIN seasons ON seasonsepisodes.season_id=seasons.id INNER JOIN seriesseasons ON seasons.id=seriesseasons.season_id INNER JOIN series ON seriesseasons.series_id=series.id INNER JOIN usersepisodes ON episodes.id=usersepisodes.episode_id WHERE  seasons.number=:max AND series.name = :name AND user_id=:user;";
+                $episode_max = $connection->prepare($query);
+                $episode_max->bindValue(":max", $max_s['MAX(seasons.number)'], PDO::PARAM_STR);
+                $episode_max->bindValue(":name", $donnees['name'], PDO::PARAM_STR);
+            	$episode_max->bindValue(":user", $user_id, PDO::PARAM_STR);
+            	$episode_max->execute();
                 $ep_max=$episode_max->fetch();
-                echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['number']." </p>";
-                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison ".$max_s['number']."</p>";
-                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$données['name']."</p>";
+
+                echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['MAX(episodes.number)']." </p>";
+                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison ".$max_s['MAX(seasons.number)']."</p>";
+                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$donnees['name']."</p>";
+
                 }while ($donnees = $name->fetch());
                 $name->closeCursor();
                 $season_max->closeCursor();

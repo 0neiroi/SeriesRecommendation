@@ -12,20 +12,17 @@
 
         $reqserie->bindValue(":serie", $_POST['serie'], PDO::PARAM_STR);
         $reqserie->execute();
-        print_r ($reqserie-> errorInfo ()); 
         $repserie=$reqserie->fetchAll();
 
         $reqsaison->bindValue(":serie", $_POST['serie'], PDO::PARAM_STR);
         $reqsaison->bindValue(":numsaison", $_POST['numsaison'], PDO::PARAM_STR);
         $reqsaison->execute();
-        print_r ($reqsaison-> errorInfo ()); 
         $repsaison=$reqsaison->fetchAll();
 
         $reqepisode->bindValue(":serie", $_POST['serie'], PDO::PARAM_STR);
         $reqepisode->bindValue(":numsaison", $_POST['numsaison'], PDO::PARAM_STR);
         $reqepisode->bindValue(":numepisode", $_POST['numepisode'], PDO::PARAM_STR);
         $reqepisode->execute();
-        print_r ($reqepisode-> errorInfo ());
         $repepisode=$reqepisode->fetchAll();
 
         if(count($repserie)==0 || count($repsaison)==0 || count($repepisode)==0 ){       
@@ -39,14 +36,14 @@
             $episode_id->bindValue(":numsaison", $_POST['numsaison'], PDO::PARAM_STR);
             $episode_id->bindValue(":numepisode", $_POST['numepisode'], PDO::PARAM_STR);
             $episode_id->execute();
-            print_r ($episode_id-> errorInfo ());
             $repepisode_id=$episode_id->fetch();
 
             $nouvelepisode=$connection->prepare('INSERT INTO usersepisodes (user_id, episode_id) VALUES (:user_id,:repepisode_id);');
             $nouvelepisode->bindValue(":user_id", $_GET['id'], PDO::PARAM_STR);
             $nouvelepisode->bindValue(":repepisode_id", $repepisode_id[0], PDO::PARAM_STR);
             $nouvelepisode->execute();
-            print_r ($nouvelepisode-> errorInfo ());
 
         }
+
+        header('Location: series_utilisateur.php?id='.$_GET['id']);
 ?>
