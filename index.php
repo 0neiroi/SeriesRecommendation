@@ -202,12 +202,23 @@ and open the template in the editor.
 
         <!-- -->
       <?php 
-        	$sql = 'SELECT backdrop_path,id,name FROM series;';
+          if (isset($_SESSION["genres"])){
+            $sql = 'SELECT backdrop_path,series.id,series.name FROM series INNER JOIN seriesgenres ON series.id=seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id=genres.id WHERE ';  
+            for ($i=0; $i < count($_SESSION["genres"]) ; $i++){
+              
+              $sql.=" genres.name LIKE \"";
+              $sql.=$_SESSION["genres"][$i];
+              if($i+1<count($_SESSION["genres"])){$sql.="\" OR ";} 
+              else{$sql.="\"";}
+
+            }
+          }else{
+            $sql = 'SELECT backdrop_path,series.id,series.name FROM series;';  
+          }
 
 			// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
 			$req = $connection->prepare($sql); 
 			$req->execute();
-
 			$rows = $req->fetchAll();
 
          ?>
@@ -229,25 +240,25 @@ and open the template in the editor.
               <div class="carousel-inner" role="listbox">
                 <div class="item active"><?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
               </div>
 
