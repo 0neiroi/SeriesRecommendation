@@ -26,16 +26,14 @@ function loadJSONDoc(){
 
 	// Initialize request
 	xmlhttp.open("GET", "http://localhost/L3/projet/SeriesRecommendation/script/series.php", true);
-	 /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
-  //  xmlhttp.open("GET", "script/series.php", true); il faut faire attention au chemin. ici, les deux scripts sont dans le même répertoire ;)
-  // My bad, en fait il faut mettre le protocole et le chemin entier ... pourquoi ? je ne sais pas.
-
+	
 	// Send
 	xmlhttp.send();
 }
 
 /**
- * Insert the specified content (array of movies) in the specified list
+ * fonction qui permet de créer un lien menant vers seriesbis.php en récupérant l'id de la série
+ * de façon à afficher les données de la série
  */
 function insert(obj){
 	// pour chaque série présente dans le tableau retourné en JSON, on va afficher le titre de la série dans une liste
