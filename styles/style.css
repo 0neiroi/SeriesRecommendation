@@ -64,8 +64,29 @@ transition: .8s all .3s;
 	color:black;
 }
 
+.panel-body{
+	color:white;
+}
+
+#poster>a>img{
+	width:200px;
+}
+h1{
+	color:white;
+}
+
+p{
+	color: white;
+}
+
+.succes{
+	color: black;
+}
+
+
+
 footer{
-    background-color: grey;
+    background-color: #222222;
     color: white;
 	text-align:center;
 	
@@ -73,6 +94,14 @@ footer{
 footer a{
 	color:white;
 	
+}
+
+.social{
+	margin-top:20px;
+}
+
+body{
+	background-image: url('../img/grey.jpg') ;
 }
 #copyright{
     color:white;

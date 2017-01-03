@@ -11,7 +11,7 @@ and open the template in the editor.
         <link href="../styles/style.css" rel="stylesheet">
         <link rel="stylesheet" href="../styles/styleconnexion.css"/>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Search | Series Choice</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,38 +24,51 @@ and open the template in the editor.
                     <div class="col-lg-2 col-xs-2"><!--mettre plein d'images ici--> </div>
                 </div>
             </marquee>
-            <div class="row" id='navbar'>
-                <ul id ='menu'>
-                    <li class="col-lg-2 col-md-3 col-sm-3 col-xs-6">
-                        <a href='accueil.php'>Accueil<a/>
-                    </li>
-                    <li class='col-lg-2 col-md-3 col-sm-3 col-xs-6'>
-                        <a href=''>Séries</a>
-                        <ul>
-                            <li><a href="">Action</a></li>
-                            <li><a href="">Aventure</a></li>
-                            <li><a href="">blablabla</a></li>
-                            <li><a href="">...</a></li>
-                            <li><a href="">Series a voir</a></li>
-                        </ul>
-                    </li>
-                    <li class='col-lg-2 col-md-3 col-sm-3 col-xs-6'>
-                        <a href=''>Profil</a>
-                    </li>
-                    <li class='col-lg-2 col-md-3 col-sm-3 col-xs-6'>
-                        <a href='' data-toggle="modal" data-target="#myModal">S'identifier/S'inscrire</a>
-                    </li>
-                </ul>
+            
+            <nav class="navbar navbar-inverse">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">SeriesChoice</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="../">Home</a></li>
+			      <li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
+			        <span class="caret"></span></a>
+			        <ul class="dropdown-menu">
+			          <li><a href="search.php?search=action">Action</a></li>
+			          <li><a href="search.php?search=adventure">Adventure</a></li>
+			          <li><a href="search.php?search=fantasy">Fantasy</a></li>
+			        </ul>
+			      </li>
+			      <li><a href="series_utilisateur.php?id=1">Profil</a></li>
+			    </ul>
+			    <form class="navbar-form navbar-left" action="search.php" method="get">
+				  <div class="input-group">
+				    <input type="text" class="form-control" placeholder="Search" name="search">
+				    <div class="input-group-btn">
+				      <button class="btn btn-default" type="submit">
+				        <i class="glyphicon glyphicon-search"></i>
+				      </button>
+				    </div>
+				  </div>
+				</form>
+			    <ul class="nav navbar-nav navbar-right">
+			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			      <li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			    </ul>
+			  </div>
+			</nav>
 
 
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="myModal3" role="dialog">
                     <div class="modal-dialog">       
                         <div id="global">
 
                           <!-- Panel for connection -->
                           <div class="panel">
-                            <form action="script/personal-space.php" method="post">
+                            <form action="personal-space.php" method="post">
                               <div>
                                 <div>
                                   <label for="identifier1">Identifiant</label>
@@ -74,9 +87,17 @@ and open the template in the editor.
                           </div>
 
                         
+                          
+                        </div>
+                    </div>           
+                </div>
+
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">       
+                        <div id="global">
                           <!-- Panel for subscription -->
                           <div class="panel">
-                            <form action="script/registration.php" method="post">
+                            <form action="registration.php" method="post">
                               <div id="credentials">
                                 <div>
                                   <label for="identifier2">Nom d'utilisateur</label>
@@ -163,20 +184,10 @@ and open the template in the editor.
                 </div>
 
 
-
-                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-4" id="recherche">
-                    <form action="script/search.php" method="get">
-                        <input type="text" name="search" value="rechercher"/>
-                        <input type="submit" value=""/>
-                    </form>
-                </div>
-            </div>
-
-
         </header>
 
-        <div id="corps" class="row">
-            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 ">
+        <div id="corps" class="row panel panel-default">
+            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 panel-body">
                 <?php
 	// Connect to the database
 	require 'base.php';
@@ -190,15 +201,15 @@ and open the template in the editor.
   }
 
 
-	$query = "SELECT *
-FROM series
-WHERE original_name LIKE :search OR name LIKE :search;";
+	$query = "SELECT DISTINCT series.name, series.id FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR
+ series.original_name LIKE :search OR series.name LIKE :search;";
 	$statement = $connection->prepare($query);
 	$statement->bindValue(":search", $search, PDO::PARAM_STR);
 	$statement->execute();
 	 //print_r($statement->errorInfo());
 echo "<div>Resultat de la recherche :";
 				echo "<ul>";
+
 	$rows = $statement->fetchAll();
 				$genres = array();
 				for ($i = 0; $i < sizeof($rows); $i++){
@@ -217,32 +228,42 @@ echo "<div>Resultat de la recherche :";
         </div>
         <footer class="row">
             <div class='row'>
-                <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> <p>Desciption du site</p></div>
-                <div class='col-lg-2 col-md-6 col-sm-9 col-xs-12' id='plan'><p>Accueil</br>séries</br>Profil</br> S'identifier/S'inscrire</br>Recherche</p></div>
-                <div class="col-lg-4 col-md-12 col-sm-3 col-xs-12 col-lg-offset-2">
+                <div class='col-lg-2 col-md-2 col-sm-2'></div> 
+                <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> 
+                  
+                    <p><h3>Map Site</h3></p>
+                    <p><a href="../">Home</a></br>
+                    <a href="../pages/series.html">Series</a></br>
+                    <a href="series_utilisateur.php?id=1">Profil</a></br> 
+                    <a href="search.php?search=fantasy">Search</a></p>
+                  
+                </div>
+                
+                <div class="col-lg-3 col-md-12 col-sm-3 col-xs-12 col-lg-offset-1">
                     <div class='row'>
-
-                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-4' >
+                      <div class="social"> 
+                        <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
                             <img class='img-responsive' src="../img/tw.png"/>
                         </div>
-                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
+                        <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
                             <img class="img-responsive"src="../img/fb.png"/>
                         </div >
-                        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
+                        <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
                             <img class='img-responsive' src='../img/ins.png'/>
                         </div> 
+                      </div> 
                     </div>
                     <div class='row'>
-                        <div class="col-lg-12 col-md-12 col-sd-12 col-xs-12">
-                            <a href='#navbar'>Retour en haut de page</a>
+                        <div class="col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                            <a href='#navbar'>Back up</a>
                         </div>
                     </div>
+            </div>
+            <div class="row">
+                <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id="copyright"> 
+                    <p>Copyright</p>
                 </div>
-                <div class="row">
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id="copyright"> 
-                        <p>Copyright</p>
-                    </div>
-                </div>				
+            </div>				
         </footer>
     </body>
 </html>

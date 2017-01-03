@@ -1,46 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
+<?php
+// connexion à la bdd
+require 'script/base.php';
+$connection->exec("SET NAMES 'utf8'");
 
-    <link href="../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/styleconnexion.css"/>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Series</title>
-	<!--<link rel="stylesheet" href="styles/series.css" type="text/css"/>-->
-	<script type="text/javascript" src="../script/series.js"></script>
-</head>
-<body>
-<header>
+?>
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link href="styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="styles/styleconnexion.css"/>
+        <meta charset="UTF-8">
+        <title>Home | Series Choice</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <header>
 
             <marquee>
                 <div class="row">
                     <div class="col-lg-2 col-xs-2"><!--mettre plein d'images ici--> </div>
                 </div>
             </marquee>
-            
+           
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
-			      <a class="navbar-brand" href="../">SeriesChoice</a>
+			      <a class="navbar-brand" href="#">SeriesChoice</a>
 			    </div>
 			    <ul class="nav navbar-nav">
-			      <li class="active"><a href="../">Home</a></li>
+			      <li class="active"><a href="index.html">Home</a></li>
 			      <li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
 			        <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-			          <li><a href="../script/search.php?search=action">Action</a></li>
-			          <li><a href="../script/search.php?search=adventure">Adventure</a></li>
-			          <li><a href="../script/search.php?search=fantasy">Fantasy</a></li>
+			          <li><a href="script/search.php?search=action">Action</a></li>
+			          <li><a href="script/search.php?search=adventure">Adventure</a></li>
+			          <li><a href="script/search.php?search=fantasy">Fantasy</a></li>
 			        </ul>
 			      </li>
-			      <li><a href="../script/series_utilisateur.php?id=1">Profil</a></li>
+			      <li><a href="script/series_utilisateur.php?id=1">Profil</a></li>
 			    </ul>
-			    <form class="navbar-form navbar-left" action="search.php" method="get">
+			    <form class="navbar-form navbar-left" action="script/search.php" method="get">
 				  <div class="input-group">
 				    <input type="text" class="form-control" placeholder="Search" name="search">
 				    <div class="input-group-btn">
@@ -65,7 +74,7 @@
 
                           <!-- Panel for connection -->
                           <div class="panel">
-                            <form action="../script/personal-space.php" method="post">
+                            <form action="script/personal-space.php" method="post">
                               <div>
                                 <div>
                                   <label for="identifier1">Identifiant</label>
@@ -94,7 +103,7 @@
                         <div id="global">
                           <!-- Panel for subscription -->
                           <div class="panel">
-                            <form action="../script/registration.php" method="post">
+                            <form action="script/registration.php" method="post">
                               <div id="credentials">
                                 <div>
                                   <label for="identifier2">Nom d'utilisateur</label>
@@ -183,24 +192,87 @@
 
         </header>
 
-        <div id="corps" class="row panel panel-default">
-            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 panel-body">
- 				<div id="affichageSeries">
- 		
- 					</ul>
- 				</div>
-			</div>
+        <!-- -->
+      <?php 
+        	$sql = 'SELECT backdrop_path,id,name FROM series;';
+
+			// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+			$req = $connection->prepare($sql); 
+			$req->execute();
+
+			$rows = $req->fetchAll();
+
+         ?>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 background">
+              <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div> 
+          <div class="panel panel-default col-lg-6 col-xs-6">
+          <div id="myCarousel" class="carousel slide panel-body" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active"><?php
+                $ligne = $rows[rand(0,sizeof($rows))];?>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                </div>
+
+                <div class="item">
+                  <?php
+                $ligne = $rows[rand(0,sizeof($rows))];?>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                </div>
+
+                <div class="item">
+                  <?php
+                $ligne = $rows[rand(0,sizeof($rows))];?>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                </div>
+
+                <div class="item">
+                  <?php
+                $ligne = $rows[rand(0,sizeof($rows))];?>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['name']?>;"></a>
+                </div>
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
+
+         </div>   
+
+          </div>
+
         </div>
+         
+         
         <footer class="row">
             <div class='row'>
                 <div class='col-lg-2 col-md-2 col-sm-2'></div> 
                 <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> 
                   
                     <p><h3>Map Site</h3></p>
-                    <p><a href="../">Home</a></br>
-                    <a href="#">Series</a></br>
-                    <a href="../script/series_utilisateur.php?id=1">Profil</a></br> 
-                    <a href="../script/search.php?search=fantasy">Search</a></p>
+                    <p><a href="#">Home</a></br>
+                    <a href="pages/series.html">Series</a></br>
+                    <a href="script/series_utilisateur.php?id=1">Profil</a></br> 
+                    <a href="script/search.php?search=fantasy">Search</a></p>
                   
                 </div>
                 
@@ -208,13 +280,13 @@
                     <div class='row'>
                       <div class="social"> 
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
-                            <img class='img-responsive' src="../img/tw.png"/>
+                            <img class='img-responsive' src="img/tw.png"/>
                         </div>
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class="img-responsive"src="../img/fb.png"/>
+                            <img class="img-responsive"src="img/fb.png"/>
                         </div >
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class='img-responsive' src='../img/ins.png'/>
+                            <img class='img-responsive' src='img/ins.png'/>
                         </div> 
                       </div> 
                     </div>
@@ -230,6 +302,5 @@
                 </div>
             </div>				
         </footer>
-
-</body>
+    </body>
 </html>

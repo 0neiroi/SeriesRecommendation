@@ -25,7 +25,7 @@ function loadJSONDoc(){
 	};
 
 	// Initialize request
-	xmlhttp.open("GET", "http://localhost/githubProject/SeriesRecommendation/script/series.php", true);
+	xmlhttp.open("GET", "http://localhost/L3/projet/SeriesRecommendation/script/series.php", true);
 	 /*VALERE*/ // ^^^^^^^^^^^^^^^^ 
   //  xmlhttp.open("GET", "script/series.php", true); il faut faire attention au chemin. ici, les deux scripts sont dans le même répertoire ;)
   // My bad, en fait il faut mettre le protocole et le chemin entier ... pourquoi ? je ne sais pas.
@@ -47,7 +47,7 @@ function insert(obj){
 		// on veut ajouter le titre sous forme de lien
 		var newa = document.createElement("a");
 		// on fait le lien avec seriebis.php qui contiendra les infos de la série
-		newa.setAttribute('href','script/seriebis.php?id='+obj.series[i].id);
+		newa.setAttribute('href','../script/seriebis.php?id='+obj.series[i].id);
 		// on attribue à p le nom de la série
 		newa.innerHTML = obj.series[i].name;
 		// on ajoute le lien dans p

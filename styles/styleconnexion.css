@@ -1,4 +1,4 @@
-body{
+#global{
   font-family : "Lucida Sans Unicode";
   color : lightgrey;
   background-image: url("./background.jpg");
@@ -19,6 +19,10 @@ input{
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 10px;
+}
+
+.modal p{
+	color:white;
 }
 
 label{

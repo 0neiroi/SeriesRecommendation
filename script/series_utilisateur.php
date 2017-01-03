@@ -1,20 +1,22 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
-<head>
-    <meta charset="UTF-8" />
+    <head>
+        <link href="../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../styles/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="../styles/styleconnexion.css"/>
+        <meta charset="UTF-8">
+        <title>Personal Space</title>
 
-    <link href="../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/styleconnexion.css"/>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>Series</title>
-	<!--<link rel="stylesheet" href="styles/series.css" type="text/css"/>-->
-	<script type="text/javascript" src="../script/series.js"></script>
-</head>
-<body>
-<header>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <header>
 
             <marquee>
                 <div class="row">
@@ -25,7 +27,7 @@
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
-			      <a class="navbar-brand" href="../">SeriesChoice</a>
+			      <a class="navbar-brand" href="#">SeriesChoice</a>
 			    </div>
 			    <ul class="nav navbar-nav">
 			      <li class="active"><a href="../">Home</a></li>
@@ -33,12 +35,12 @@
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
 			        <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-			          <li><a href="../script/search.php?search=action">Action</a></li>
-			          <li><a href="../script/search.php?search=adventure">Adventure</a></li>
-			          <li><a href="../script/search.php?search=fantasy">Fantasy</a></li>
+			          <li><a href="search.php?search=action">Action</a></li>
+			          <li><a href="search.php?search=adventure">Adventure</a></li>
+			          <li><a href="search.php?search=fantasy">Fantasy</a></li>
 			        </ul>
 			      </li>
-			      <li><a href="../script/series_utilisateur.php?id=1">Profil</a></li>
+			      <li><a href="#">Profil</a></li>
 			    </ul>
 			    <form class="navbar-form navbar-left" action="search.php" method="get">
 				  <div class="input-group">
@@ -65,7 +67,7 @@
 
                           <!-- Panel for connection -->
                           <div class="panel">
-                            <form action="../script/personal-space.php" method="post">
+                            <form action="personal-space.php" method="post">
                               <div>
                                 <div>
                                   <label for="identifier1">Identifiant</label>
@@ -94,7 +96,7 @@
                         <div id="global">
                           <!-- Panel for subscription -->
                           <div class="panel">
-                            <form action="../script/registration.php" method="post">
+                            <form action="registration.php" method="post">
                               <div id="credentials">
                                 <div>
                                   <label for="identifier2">Nom d'utilisateur</label>
@@ -180,27 +182,112 @@
                     </div>           
                 </div>
 
-
         </header>
 
-        <div id="corps" class="row panel panel-default">
-            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 panel-body">
- 				<div id="affichageSeries">
- 		
- 					</ul>
- 				</div>
-			</div>
+        <div class="panel panel-default">
+
+        <div class="row panel-body">
+          <?php 
+            // Connect to the database
+            require 'base.php';
+
+            // Character encoding of the database
+            $connection->exec("SET NAMES 'utf8'");
+
+          ?>
+          <h1>
+          <?php
+            // on affiche le nom de l'utilisateur a partir de son id transmi a la connection
+            $req = $connection->prepare('SELECT name FROM users WHERE id = ?');
+            $req->execute(array($_GET['id']));
+            $donnee = $req->fetchAll();
+  				  $genres = array();
+  				  for ($i = 0; $i < sizeof($donnee); $i++){
+  					 $donnee2 = $donnee[$i];
+  					 $genres[$i] = $donnee2['name'];
+  					 //echo var_dump($row2['id']);
+  					 echo $donnee2['name'];
+  				  }
+              //echo $donnee;
+          ?>
+          </h1>
+          <p> Vos séries en cours:</p>
+          <?php
+          // on va chercher le nom des séries que l'utilisateur a vues
+            $name = $connection->prepare('SELECT name FROM series WHERE id=
+                   (
+                  SELECT DISTINCT serie_id FROM seriesseasons WHERE season_id=
+                  (
+                  SELECT DISTINCT season_id FROM seasonepisode WHERE episode_id=
+                  (
+                  SELECT episode_id FROM usersepisodes WHERE user_id=?
+                  )
+                  )
+                  )');
+            $idurl = $_GET['id'];
+            $name->bindValue(1, $idurl, PDO::PARAM_STR);
+  		      $name->execute();
+            $user_id = $_GET['id'];
+            if(($donnees = $name->fetch())==FALSE){
+              echo "<p> Vous n'avez commencé aucune série.</p>";
+            }else{
+              do{
+                //pour chaque série que l'utilisateur regarde on va chercher la saison a laquelle il est et le dernier épisode qu'il a vu.
+                $season_max = $connection->query('SELECT MAX  number FROM seasons WHERE season_id=
+                               (
+                                 SELECT season_id FROM seriesseasons WHERE series_id=
+                                 (
+                                 SELECT id FROM series WHERE name=$name
+                                 )) 
+                           AND season_id=
+                                  (
+                                  SELECT DISTICT season_id FROM seasonsepisodes WHERE episode_id=
+                                  (
+                                   SELECT episode_id FROM usersepisodes WHERE user_id="' . $user_id . '"))');
+                $max_s = $season_max->fetch();
+                $episode_max = $connection->query('SELECT MAX number FROM episodes WHERE id=(SELECT episode_id FROM seasonsepisodes WHERE season_id=
+                                              (
+                                              SELECT season_id FROM seasons WHERE  number="' . $max_s['number'] . '"
+                                              AND id=
+                                              (
+                                              SELECT season_id FROM seriesseasons WHERE series_id=
+                                              (
+                                              SELECT id FROM serie WHERE name="' . $donnees['name'] . '"))))
+                                          AND id=
+                                              (
+                                              SELECT episode_id FROM usersepisodes WHERE user_id= "' . $user_id . '"
+                                              ');
+                $ep_max=$episode_max->fetch();
+                echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['number']." </p>";
+                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison ".$max_s['number']."</p>";
+                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$données['name']."</p>";
+                }while ($donnees = $name->fetch());
+                $name->closeCursor();
+                $season_max->closeCursor();
+                $episode_max->closeCursor();
+              }
+          ?>
+          <!-- on créer un formulaire pour que l'utilisateur puisse ajouter ce qu'il a vu dernierement -->
+          <form method="post" action="script/verification.php">
+              
+              <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-3'>J'ai vu l'épisode <input type='number' name='numepisode'/> </p>
+              <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison <input type='number' name='numsaison'/> </p>
+              <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de la série <input type='text' name='serie'/></p>
+              <p class='col-lg-2 col-md-2 col-sm-3 col-xs-12 col-sm-offset-6'><input type="submit" value="OK"/></p>
+              
+          </form>
+        </div>  
         </div>
-        <footer class="row">
+       <footer class="row">
             <div class='row'>
                 <div class='col-lg-2 col-md-2 col-sm-2'></div> 
                 <div class='col-lg-4 col-md-6 col-sm-9 col-xs-12'> 
                   
                     <p><h3>Map Site</h3></p>
                     <p><a href="../">Home</a></br>
-                    <a href="#">Series</a></br>
-                    <a href="../script/series_utilisateur.php?id=1">Profil</a></br> 
-                    <a href="../script/search.php?search=fantasy">Search</a></p>
+                    <a href="../pages/series.html">Series</a></br>
+                    <a href="series_utilisateur.php?id=1">Profil</a></br> 
+                    <a href="search.php?search=fantasy">Search</a></p>
                   
                 </div>
                 
@@ -228,8 +315,8 @@
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' id="copyright"> 
                     <p>Copyright</p>
                 </div>
-            </div>				
+            </div>        
         </footer>
-
-</body>
+        
+    </body>
 </html>
