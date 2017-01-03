@@ -46,31 +46,56 @@ $genres = $_SESSION["genres"];
 
 				<!-- Choice of genres -->
 				<p>
-					Votre style de musique :
+					Votre genre de séries :
 				</p>
 
 				<div id="genres">
-					<div>
-						<input type="checkbox" name="genres[]" value="blues" <?php if (in_array("blues", $genres)) echo "checked" ?> /><label>Blues</label>
-						<input type="checkbox" name="genres[]" value="classic" <?php if (in_array("classic", $genres)) echo "checked" ?> /><label>Classique</label>
-						<input type="checkbox" name="genres[]" value="country" <?php if (in_array("country", $genres)) echo "checked" ?> /><label>Country</label>
-					</div>
-					<div>
-						<input type="checkbox" name="genres[]" value="electro" <?php if (in_array("electro", $genres)) echo "checked" ?> /><label>Electro</label>
-						<input type="checkbox" name="genres[]" value="hiphop" <?php if (in_array("hiphop", $genres)) echo "checked" ?> /><label>Hip Hop</label>
-						<input type="checkbox" name="genres[]" value="jazz" <?php if (in_array("jazz", $genres)) echo "checked" ?> /><label>Jazz</label>
-					</div>
-					<div>
-						<input type="checkbox" name="genres[]" value="metal" <?php if (in_array("metal", $genres)) echo "checked" ?> /><label>Metal</label>
-						<input type="checkbox" name="genres[]" value="pop" <?php if (in_array("pop", $genres)) echo "checked" ?> /><label>Pop</label>
-						<input type="checkbox" name="genres[]" value="reggae" <?php if (in_array("reggae", $genres)) echo "checked" ?> /><label>Reggae</label>
-					</div>
-					<div>
-						<input type="checkbox" name="genres[]" value="rnb" <?php if (in_array("rnb", $genres)) echo "checked" ?> /><label>RNB</label>
-						<input type="checkbox" name="genres[]" value="rock" <?php if (in_array("rock", $genres)) echo "checked" ?> /><label>Rock</label>
-						<input type="checkbox" name="genres[]" value="soul" <?php if (in_array("soul", $genres)) echo "checked" ?> /><label>Soul</label>
-					</div>
-				</div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Adventure" <?php if (in_array("Adventure", $genres)) echo "checked" ?>/><label>Aventure</label>
+                                  <input type="checkbox" name="genres[]" value="Fantasy" <?php if (in_array("Fantasy", $genres)) echo "checked" ?>/><label>Fantasy</label>
+                                  <input type="checkbox" name="genres[]" value="Animation" <?php if (in_array("Animation", $genres)) echo "checked" ?>/><label>Animation</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Drama" <?php if (in_array("Drama", $genres)) echo "checked" ?>/><label>Drama</label>
+                                  <input type="checkbox" name="genres[]" value="Horror" <?php if (in_array("Horror", $genres)) echo "checked" ?>/><label>Horror</label>
+                                  <input type="checkbox" name="genres[]" value="Action" <?php if (in_array("Action", $genres)) echo "checked" ?>/><label>Action</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Comedy" <?php if (in_array("Comedy", $genres)) echo "checked" ?>/><label>Comedy</label>
+                                  <input type="checkbox" name="genres[]" value="History" <?php if (in_array("History", $genres)) echo "checked" ?>/><label>History</label>
+                                  <input type="checkbox" name="genres[]" value="Western" <?php if (in_array("Western", $genres)) echo "checked" ?>/><label>Western</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Thriller" <?php if (in_array("Thriller", $genres)) echo "checked" ?>/><label>Thriller</label>
+                                  <input type="checkbox" name="genres[]" value="Crime" <?php if (in_array("Crime", $genres)) echo "checked" ?>/><label>Crime</label>
+                                  <input type="checkbox" name="genres[]" value="Documentary" <?php if (in_array("Documentary", $genres)) echo "checked" ?>/><label>Documentary</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Science Fiction" <?php if (in_array("Science Fiction", $genres)) echo "checked" ?>/><label>Sci-Fi</label>
+                                  <input type="checkbox" name="genres[]" value="Mystery" <?php if (in_array("Mystery", $genres)) echo "checked" ?>/><label>Mystery</label>
+                                  <input type="checkbox" name="genres[]" value="Music" <?php if (in_array("Music", $genres)) echo "checked" ?>/><label>Music</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Romance" <?php if (in_array("Romance", $genres)) echo "checked" ?>/><label>Romance</label>
+                                  <input type="checkbox" name="genres[]" value="Family" <?php if (in_array("Family", $genres)) echo "checked" ?>/><label>Family</label>
+                                  <input type="checkbox" name="genres[]" value="War" <?php if (in_array("War", $genres)) echo "checked" ?>/><label>War</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Action & Adventure" <?php if (in_array("Action & Adventure", $genres)) echo "checked" ?>/><label>Action & Adventure</label>
+                                  <input type="checkbox" name="genres[]" value="Kids" <?php if (in_array("Kids", $genres)) echo "checked" ?>/><label>Kids</label>
+                                  <input type="checkbox" name="genres[]" value="News" <?php if (in_array("News", $genres)) echo "checked" ?>/><label>News</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Reality" <?php if (in_array("Reality", $genres)) echo "checked" ?>/><label>Reality</label>
+                                  <input type="checkbox" name="genres[]" value="Sci-Fi & Fantasy" <?php if (in_array("Sci-Fi & Fantasy", $genres)) echo "checked" ?>/><label>Sci-Fi & Fantasy</label>
+                                  <input type="checkbox" name="genres[]" value="Talk" <?php if (in_array("Talk", $genres)) echo "checked" ?>/><label>Talk</label>
+                                </div>
+                                <div>
+                                  <input type="checkbox" name="genres[]" value="Soap" <?php if (in_array("Soap", $genres)) echo "checked" ?>/><label>Soap</label>
+                                  <input type="checkbox" name="genres[]" value="War & Politics" <?php if (in_array("War & Politics", $genres)) echo "checked" ?>/><label>War & Politics</label>
+                                  <input type="checkbox" name="genres[]" value="TV Movie" <?php if (in_array("TV Movie", $genres)) echo "checked" ?>/><label>TV Movie</label>
+                                </div>
+                              </div>
 
 				<div id="subscription">
 					<input type="submit" value="Sauvegarder"/>
