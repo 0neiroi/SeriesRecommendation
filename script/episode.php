@@ -1,4 +1,4 @@
-<!-- Récupération des épisodes dans la bdd -->
+<!-- Récupération des épisodes dans la bdd sur le même principe que seriebis.php -->
 <?php
 // connexion à la bdd
 require 'base.php';
