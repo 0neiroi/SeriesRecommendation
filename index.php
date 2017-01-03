@@ -321,13 +321,16 @@ and open the template in the editor.
                     <div class='row'>
                       <div class="social"> 
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
-                            <img class='img-responsive' src="img/tw.png"/>
+                            <img class='img-responsive' src="img/tw.png"/ alt="twitter">
                         </div>
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class="img-responsive"src="img/fb.png"/>
+                            <img class="img-responsive"src="img/fb.png" alt="facebook"/>
                         </div >
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class='img-responsive' src='img/ins.png'/>
+                            <img class='img-responsive' src='img/ins.png'alt="instagram"/>
+                        </div>
+			<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
+                            <img class='img-responsive' src='../img/logo-sc.png' alt=sciences-cognitives/>
                         </div> 
                       </div> 
                     </div>
