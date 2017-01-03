@@ -60,9 +60,30 @@ and open the template in the editor.
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
 			        <span class="caret"></span></a>
 			        <ul class="dropdown-menu">
-			          <li><a href="search.php?search=action">Action</a></li>
-			          <li><a href="search.php?search=adventure">Adventure</a></li>
-			          <li><a href="search.php?search=fantasy">Fantasy</a></li>
+			          	<li><a href="script/search.php?search=action">Action</a></li>
+			          	<li><a href="script/search.php?search=adventure">Adventure</a></li>
+			          	<li><a href="script/search.php?search=fantasy">Fantasy</a></li>
+                		<li><a href="script/search.php?search=animation">Animation</a></li>
+		                <li><a href="script/search.php?search=drama">Drama</a></li>
+        		        <li><a href="script/search.php?search=horror">Horror</a></li>
+                		<li><a href="script/search.php?search=comedy">Comedy</a></li>
+		                <li><a href="script/search.php?search=western">Western</a></li>
+        		        <li><a href="script/search.php?search=thriller">Thriller</a></li>
+                		<li><a href="script/search.php?search=crime">Crime</a></li>
+		                <li><a href="script/search.php?search=documentary">Documentary</a></li>
+        		        <li><a href="script/search.php?search=sciencefiction">Science Fiction</a></li>
+                		<li><a href="script/search.php?search=mystery">Mystery</a></li>
+		                <li><a href="script/search.php?search=music">Music</a></li>
+        		        <li><a href="script/search.php?search=romance">Romance</a></li>
+                		<li><a href="script/search.php?search=family">Family</a></li>
+		                <li><a href="script/search.php?search=war">War</a></li>
+        		        <li><a href="script/search.php?search=action&adventure">Action & Adventure</a></li>
+                		<li><a href="script/search.php?search=kids">Kids</a></li>
+		                <li><a href="script/search.php?search=news">News</a></li>
+        		        <li><a href="script/search.php?search=reality">Reality</a></li>
+                		<li><a href="script/search.php?search=sciencefiction&search=fantasy">Sci-Fi & Fantasy</a></li>
+                		<li><a href="script/search.php?search=soap">Soap</a></li>
+               			<li><a href="script/search.php?search=talk">Talk</a></li>
 			        </ul>
 			      </li>
 			      <li><a href="series_utilisateur.php?id=1">Profil</a></li>
