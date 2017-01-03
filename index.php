@@ -39,7 +39,7 @@ and open the template in the editor.
 			      <a class="navbar-brand" href="#">SeriesChoice</a>
 			    </div>
 			    <ul class="nav navbar-nav">
-			      <li class="active"><a href="index.html">Home</a></li>
+			      <li class="active"><a href="index.php">Home</a></li>
 			      <li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Series
 			        <span class="caret"></span></a>
@@ -321,15 +321,15 @@ and open the template in the editor.
                     <div class='row'>
                       <div class="social"> 
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
-                            <img class='img-responsive' src="img/tw.png"/ alt="twitter">
+                            <img class='img-responsive' src="img/tw.png" alt="twitter">
                         </div>
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class="img-responsive"src="img/fb.png" alt="facebook"/>
+                            <img class="img-responsive" src="img/fb.png" alt="facebook"/>
                         </div >
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class='img-responsive' src='img/ins.png'alt="instagram"/>
+                            <img class='img-responsive' src='img/ins.png' alt="instagram"/>
                         </div>
-			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
+		                  	<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
                             <img class='img-responsive' src='img/logo-sc.png' alt=sciences-cognitives/>
                         </div> 
                       </div> 
