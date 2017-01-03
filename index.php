@@ -330,7 +330,7 @@ and open the template in the editor.
                             <img class='img-responsive' src='img/ins.png'alt="instagram"/>
                         </div>
 			<div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
-                            <img class='img-responsive' src='../img/logo-sc.png' alt=sciences-cognitives/>
+                            <img class='img-responsive' src='img/logo-sc.png' alt=sciences-cognitives/>
                         </div> 
                       </div> 
                     </div>
