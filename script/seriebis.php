@@ -296,16 +296,16 @@ do{
   for ($i = 0; $i < sizeof($rows); $i++){
     $ligne2 = $donnees[$i];
   }
-  if($j%12==0){
+  if($j%6==0){
    echo "</div>"; 
    echo '<div class="row">'; 
   }
 
-  echo '<div class="col-lg-1 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">'';
+  echo '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">';
   echo '<a href="episode.php?id='.$donnees['id'].'">';
   echo '<img src="https://image.tmdb.org/t/p/w640/'.$donnees['poster_path'].'" alt="saison '.$donnees['number'].'" style="width:100%">';
   echo '<div class="caption">';
-  echo '<p>saison '.$donnees['number'].'</p>
+  echo '<p class="saison">saison '.$donnees['number'].'</p>
         </div>
       </a>
     </div>

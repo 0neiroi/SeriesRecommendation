@@ -15,6 +15,11 @@ and open the template in the editor.
 	 
 	 background-color: lightgrey;
 }
+
+.saison{
+	color:black;
+}
+
 #menu, #menu ul{
 padding:0;
 margin:0;
