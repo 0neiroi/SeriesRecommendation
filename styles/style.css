@@ -7,62 +7,7 @@ and open the template in the editor.
     Created on : 19 déc. 2016, 14:17:30
     Author     : proprietaire
 */
-#body{
-	font-family:Verdana;
-}
-#navbar{
 
-	 
-	 background-color: lightgrey;
-}
-#menu, #menu ul{
-padding:0;
-margin:0;
-list-style:none;
-text-align:center;
-font-style:normal;
-
-}
-#menu a{
-	color:white
-}
-
-#menu ul li{
-display:inherit;
-border-radius:0;
-
-}
-#menu ul li:first-child{
-	margin-top:10px;
-}
-
-#menu ul{
-position:absolute;
-z-index: 1000;
-max-height:0;
-left: 0;
-right: 0;
-overflow:hidden;
--moz-transition: .8s all .3s;
--webkit-transition: .8s all .3s;
-transition: .8s all .3s;
-}
-#menu li{
-	background-color: lightgrey;
-	height:30px;
-	border: 1px solid black;
-} 
-#menu li:hover ul{
-	max-height:200px;
-}
-#menu li:hover{
-	background-color:black;
-}
-#corps{
-    background-color:white;
-	text-align: left;
-	color:black;
-}
 
 .panel-body{
 	color:white;
