@@ -42,13 +42,7 @@ $ligne = $req3->fetch();
     </head>
     <body>
         <header>
-            <marquee>
-                <div class="row">
-                    <div class="col-lg-10 col-xs-10"><!--mettre plein d'images ici--> 
-                    	
-					</div>
-                </div>
-            </marquee>
+           
 
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
