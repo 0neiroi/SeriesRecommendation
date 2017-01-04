@@ -276,6 +276,89 @@ and open the template in the editor.
   <p>Popularity : <progress value="<?php echo $ligne['popularity']; ?>" max="10" /></p>
 
 </div>
+<?php
+
+// lancement de la requete
+$sql = 'SELECT DISTINCT seasons.* FROM seasons INNER JOIN seriesseasons ON seasons.id=seriesseasons.season_id INNER JOIN series ON seriesseasons.series_id=series.id WHERE series.id = ? ORDER BY seasons.number;';
+
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req = $connection->prepare($sql); 
+
+// on récupère l'id de la série contenu dans l'url et on l'ajoute à la requete
+$idurl = $_GET['id']; 
+$req->bindValue(1, $idurl, PDO::PARAM_STR);
+$req->execute();
+
+
+// stockage des éléments de la requête
+$j=0;
+echo '<div class="row">';
+if(($donnees = $req->fetch())==FALSE){
+}else{
+
+do{
+  for ($i = 0; $i < sizeof($rows); $i++){
+    $ligne2 = $donnees[$i];
+  }
+  if($j%3==0){
+   echo "</div>"; 
+   echo '<div class="row">'; 
+  }
+
+  echo '<div class="col-md-4"><div class="thumbnail">';
+  echo '<a href="episode.php?id='.$donnees['id'].'">';
+  echo '<img src="https://image.tmdb.org/t/p/w640/'.$donnees['poster_path'].'" alt="saison '.$donnees['number'].'" style="width:100%">';
+  echo '<div class="caption">';
+  echo '<p>saison '.$donnees['number'].'</p>
+        </div>
+      </a>
+    </div>
+  </div>';
+
+      
+  $j++;
+  }while ($donnees = $req->fetch());
+
+}
+
+?>
+</div>
+<div>
+   <div class="row">
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href="/w3images/lights.jpg">
+        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href="/w3images/fjords.jpg">
+        <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href="/w3images/fjords.jpg">
+        <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+</div>
+
 
 </div>
 </div>

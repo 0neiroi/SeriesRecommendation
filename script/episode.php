@@ -6,20 +6,7 @@ $connection->exec("SET NAMES 'utf8'");
 
 session_start();
 
-// lancement de la requete
-$sql = 'SELECT * FROM episodes WHERE id = ?;';
 
-// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
-$req = $connection->prepare($sql); 
-
-//$idurl = $_GET['id']; 
-$req->bindValue(1, '726', PDO::PARAM_STR);
-$req->execute();
-
-$rows = $req->fetchAll();
-for ($i = 0; $i < sizeof($rows); $i++){
-$ligne = $rows[$i];
-}
 
 ?>
 
@@ -35,7 +22,20 @@ and open the template in the editor.
         <link href="../styles/style.css" rel="stylesheet">
         <link rel="stylesheet" href="../styles/styleconnexion.css"/>
         <meta charset="UTF-8">
-        <title><?php echo $ligne['name']; ?> | Series Choice</title>
+        <title><?php 
+
+
+        $sql3 = 'SELECT number, series.name FROM seasons INNER JOIN seriesseasons ON seasons.id=seriesseasons.season_id INNER JOIN series ON series.id=seriesseasons.series_id WHERE seasons.id = ?;';
+
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req3 = $connection->prepare($sql3); 
+
+//$idurl = $_GET['id']; 
+$req3->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+$req3->execute();
+$ligne = $req3->fetch();
+
+        echo $ligne['name']; ?> Season <?php echo $ligne['number']; ?>  | Series Choice</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -234,26 +234,56 @@ and open the template in the editor.
                         </div>
                     </div>           
                 </div>
+<?php
+// lancement de la requete
+$sql = 'SELECT * FROM episodes INNER JOIN seasonsepisodes ON episodes.id=seasonsepisodes.episode_id INNER JOIN seasons ON seasonsepisodes.season_id=seasons.id WHERE seasons.id = ? ORDER BY episodes.number ;';
 
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req = $connection->prepare($sql); 
 
+//$idurl = $_GET['id']; 
+$req->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+$req->execute();
+
+?>
 
 <h1>
-	<?php echo $ligne['name']; ?>
+  Season <?php 
+
+              $sql2 = 'SELECT number FROM seasons WHERE id = ?;';
+
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req2 = $connection->prepare($sql2); 
+
+//$idurl = $_GET['id']; 
+$req2->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+$req2->execute();
+$donnees = $req2->fetch();
+  echo $donnees['number'];
+  ?> 
 </h1>
 
 <!-- affichage de l'affiche (poster_path) -->
-<div class="panel panel-default">
-<div id="infos" class="panel-body">
+
+<?php
+if(($donnees = $req->fetch())==FALSE){
+}else{
+
+do{
+    echo '<div class="panel panel-default"><div id="infos" class="panel-body">
+<h2>
+  '.$donnees[1].'
+</h2>
 
 <div id="poster" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-    <a href='' data-toggle="modal" data-target="#myModal2"><img class="img-rounded img-responsive" src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['still_path'] ?>" alt="Affiche de la série" /></a>
+    <a href="" data-toggle="modal" data-target="#myModal2"><img class="img-rounded img-responsive" src="https://image.tmdb.org/t/p/w640/'.$donnees['still_path'].'" alt="Affiche de la série" /></a>
 </div>
 
 <!-- Modal -->
                 <div class="modal fade" id="myModal2" role="dialog">
                     <div class="modal-dialog">       
                         <div id="global">
-      						<img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['poster_path'] ?>" alt="Affiche de la série"/>         	
+                  <img src="https://image.tmdb.org/t/p/w640/'.$donnees['still_path'].'" alt="Affiche de la série"/>          
                         </div>
                     </div>
                 </div>
@@ -262,13 +292,38 @@ and open the template in the editor.
 
 <!-- Affichage des infos relatives à la série -->
 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-  <p>Episode n°<?php echo $ligne['number']; ?></p>
-  <p>Overview : <?php echo $ligne['overview']; ?><p>
-  <p>Air date : <?php echo $ligne['air_date']; ?></p>
+  <p>Episode n°'.$donnees[2].'</p>
+  <p>Overview : '.$donnees[4].'<p>
+  <p>Air date : '.$donnees[3].'</p>
 </div>
+';
+if(isset($_SESSION['username'])){
+  echo '<form method="post" action="verification.php?id='; 
+  $sql4 = 'SELECT id FROM users WHERE name = ?;';
 
-</div>
-</div>
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req4 = $connection->prepare($sql4); 
+
+//$idurl = $_GET['id']; 
+$req4->bindValue(1, $_SESSION['username'], PDO::PARAM_STR);
+$req4->execute();
+$ligne2 = $req4->fetch();
+
+
+  
+
+  echo $ligne2['id'].'"><input class="hidden-lg hidden-md hidden-sm hidden-xs" type="text" name="numepisode" value="'.$donnees[2].'" /><input class="hidden-lg hidden-md hidden-sm hidden-xs" type="text" name="numsaison" value="'.$ligne['number'].'" /><input class="hidden-lg hidden-md hidden-sm hidden-xs" type="text" name="serie" value="'.$ligne['name'].'" /><input type="submit" class="btn-success" value="I\'ve seen it !"/> </form>';
+}
+echo '</div>
+</div>';
+  
+  }while ($donnees = $req->fetch());
+
+}
+
+?>
+
+
         <footer class="row">
             <div class='row'>
                 <div class='col-lg-2 col-md-2 col-sm-2'></div> 
@@ -301,7 +356,7 @@ and open the template in the editor.
                     </div>
                     <div class='row'>
                         <div class="col-lg-6 col-md-6 col-sd-6 col-xs-6">
-                            <a href='#navbar'>Back up</a>
+                            <a href='#'>Back up</a>
                         </div>
                     </div>
             </div>

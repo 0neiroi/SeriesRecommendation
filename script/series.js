@@ -37,6 +37,7 @@ function loadJSONDoc(){
  */
 function insert(obj){
 	// pour chaque série présente dans le tableau retourné en JSON, on va afficher le titre de la série dans une liste
+
 	for (var i=0;i<obj.series.length;i++){
 		// on récupère la div où seront affichées les séries
 		var container = document.getElementById("affichageSeries");
