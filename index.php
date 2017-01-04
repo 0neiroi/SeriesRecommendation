@@ -227,7 +227,9 @@ and open the template in the editor.
               $sql.=" genres.name LIKE \"";
               $sql.=$_SESSION["genres"][$i];
               if($i+1<count($_SESSION["genres"])){$sql.="\" OR ";} 
-              else{$sql.="\"";}
+              else{ 
+                $sql.="\";";
+              }
 
             }
           }else{
