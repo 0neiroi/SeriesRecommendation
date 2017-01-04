@@ -44,12 +44,7 @@ and open the template in the editor.
     </head>
     <body>
         <header>
-            <marquee>
-                <div class="row">
-                  <div class="col-lg-10 col-xs-10"><!--mettre plein d'images ici-->  	
-					        </div>
-                </div>
-            </marquee>
+          
 
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
@@ -301,12 +296,12 @@ do{
   for ($i = 0; $i < sizeof($rows); $i++){
     $ligne2 = $donnees[$i];
   }
-  if($j%3==0){
+  if($j%12==0){
    echo "</div>"; 
    echo '<div class="row">'; 
   }
 
-  echo '<div class="col-md-4"><div class="thumbnail">';
+  echo '<div class="col-lg-1 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">'';
   echo '<a href="episode.php?id='.$donnees['id'].'">';
   echo '<img src="https://image.tmdb.org/t/p/w640/'.$donnees['poster_path'].'" alt="saison '.$donnees['number'].'" style="width:100%">';
   echo '<div class="caption">';
