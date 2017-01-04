@@ -27,12 +27,7 @@ and open the template in the editor.
     <body>
         <header>
 
-            <marquee>
-                <div class="row">
-                    <div class="col-lg-2 col-xs-2"><!--mettre plein d'images ici--> </div>
-                </div>
-            </marquee>
-           
+            
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
