@@ -87,6 +87,7 @@ and open the template in the editor.
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 			      <?php  
               if (isset($_SESSION["username"])){
+                echo '<li><a href="script/personal-space.php"><span class="glyphicon glyphicon-film"></span> Account</a></li>';
                 echo '<li><a href="script/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
       }else{
         echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
@@ -262,25 +263,25 @@ and open the template in the editor.
               <div class="carousel-inner" role="listbox">
                 <div class="item active"><?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
 
                 <div class="item">
                   <?php
                 $ligne = $rows[rand(0,sizeof($rows))];?>
-                <a href="script/seriebis.php?id=<?php echo $ligne['series.id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
+                <a href="script/seriebis.php?id=<?php echo $ligne['id'];?>"><img src="https://image.tmdb.org/t/p/w640/<?php echo $ligne['backdrop_path']; ?>" alt="<?php echo $ligne['series.name']?>;"></a>
                 </div>
               </div>
 

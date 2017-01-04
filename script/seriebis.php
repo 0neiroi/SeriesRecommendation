@@ -104,6 +104,7 @@ and open the template in the editor.
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 			      <?php  
               if (isset($_SESSION["username"])){
+                echo '<li><a href="personal-space.php"><span class="glyphicon glyphicon-film"></span> Account</a></li>';
                 echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
       }else{
         echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
@@ -324,38 +325,6 @@ do{
 ?>
 </div>
 <div>
-   <div class="row">
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
-        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <a href="/w3images/fjords.jpg">
-        <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="thumbnail">
-      <a href="/w3images/fjords.jpg">
-        <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
 
 </div>
 
@@ -379,16 +348,16 @@ do{
                     <div class='row'>
                       <div class="social"> 
                           <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' >
-                            <img class='img-responsive' src="img/tw.png" alt="twitter">
+                            <img class='img-responsive' src="../img/tw.png" alt="twitter">
                         </div>
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class="img-responsive" src="img/fb.png" alt="facebook"/>
+                            <img class="img-responsive" src="../img/fb.png" alt="facebook"/>
                         </div >
                         <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
-                            <img class='img-responsive' src='img/ins.png' alt="instagram"/>
+                            <img class='img-responsive' src='../img/ins.png' alt="instagram"/>
                         </div>
 			                  <div class='col-lg-4 col-md-4 col-sm-4 col-xs-4'>
-                            <img class='img-responsive' src='img/logo-sc.png' alt=sciences-cognitives/>
+                            <img class='img-responsive' src='../img/logo-sc.png' alt=sciences-cognitives/>
                         </div> 
                       </div> 
                     </div>

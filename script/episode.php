@@ -103,7 +103,9 @@ $ligne = $req3->fetch();
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 			      <?php  
               if (isset($_SESSION["username"])){
+                echo '<li><a href="personal-space.php"><span class="glyphicon glyphicon-film"></span> Account</a></li>';
                 echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
+
       }else{
         echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
       }             
@@ -248,7 +250,21 @@ $req->execute();
 ?>
 
 <h1>
-  Season <?php 
+<?php 
+
+              $sql5 = 'SELECT series.name, series.id FROM series INNER JOIN seriesseasons ON series.id=seriesseasons.series_id INNER JOIN seasons ON seasons.id=seriesseasons.season_id WHERE seasons.id = ?;';
+
+// on lance la requête (mysql_query) et on impose un message d'erreur si la requête ne se passe pas bien (or die)
+$req5 = $connection->prepare($sql5); 
+
+//$idurl = $_GET['id']; 
+$req5->bindValue(1, $_GET['id'], PDO::PARAM_STR);
+$req5->execute();
+$donnees5 = $req5->fetch();
+  echo '<a href="seriebis.php?id='.$donnees5['id'].'">'.$donnees5['name'].'</a>';
+  ?> 
+
+  | Season <?php 
 
               $sql2 = 'SELECT number FROM seasons WHERE id = ?;';
 

@@ -89,6 +89,7 @@ and open the template in the editor.
 			      <li><a href="" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 			      <?php  
               if (isset($_SESSION["username"])){
+              	echo '<li><a href="personal-space.php"><span class="glyphicon glyphicon-film"></span> Account</a></li>';
                 echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
       }else{
         echo '<li><a href="" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
@@ -229,7 +230,7 @@ and open the template in the editor.
 			<p>Modifier les informations de <?php echo $username; ?>.</p>
 
 			<!-- Panel to change information -->
-			<form action="#" method="post">
+			<form action="update.php" method="post">
 				<div id="credentials">
 					<div>
 						<label for="password2">Mot de passe</label>
