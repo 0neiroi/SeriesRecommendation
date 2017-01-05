@@ -1,14 +1,16 @@
-# SeriesRecommendation
+﻿# SeriesRecommendation
 Projet Web étudiant dans le cadre de la licence MIASHS : Créer un site de recommandation de séries télé
 
 ## Installation
+
+BDD: Il y a des modifications à faire dans le php.ini afin de l'importation de la base de données fonctionne dans phpmyadmin.
 
 Pour les tests(avec php) le contenue du projet doit copier dans le dossier root du serveur web (www) car les configurations php et serveur sont propres aux machines. Attention à ça !
 
 /!\ Pour pouvoir utiliser le projet. Il faut importer la base, en augmentant la capacité d'importation des requêtes dans le php.ini
 Il faut ensuite ajouter les champs salt(varchar(96)) et gets_emails(tinyInt). Il faut également augmenter la type du champs password en le passant à 128.
 Il vous faut aussi ajouter la table usersgenre avec deux colonnes. user_id(int(11)) et genre(varchar(18)).
-
+Enfin, il vous faut ajouter un utilisateur anonymous - anonymous(mdp) ayant les droits de sélections, d'insertions et de modifications. 
 
 ## Qui fait Quoi ?
 

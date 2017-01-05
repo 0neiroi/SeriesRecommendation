@@ -4,6 +4,26 @@ require('base.php');
 
 // Start session
 session_start();
+
+// If a username has been submitted, check username and password
+			if (isset($_POST["identifier1"])){
+		    	// Check username and password
+				$username = $_POST['identifier1'];
+				$password = $_POST['password1'];
+
+			 	// Check username and password
+				$query = "SELECT salt,password,id FROM users WHERE name=:username";
+				$statement = $connection->prepare($query);
+				$statement->bindValue(":username", $username, PDO::PARAM_STR);
+				$statement->execute();
+				$row = $statement->fetch(PDO::FETCH_ASSOC);
+				// If successful, add the username to a session variable
+        
+				if ($row['password'] == hash('sha384', $password.$row['salt'])) {
+					$_SESSION["username"] = $username;
+          $_SESSION["id"] = $row['id'];
+				}
+			}
 ?>
 
 
