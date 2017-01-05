@@ -231,7 +231,7 @@ and open the template in the editor.
                   }
 
 
-                  $query = "SELECT DISTINCT series.name, series.id,series.poster_path FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR series.original_name LIKE :searchIntegral OR series.name LIKE :searchIntegral;";
+                  $query = "SELECT DISTINCT series.name, series.id,series.poster_path FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR series.original_name LIKE :searchIntegral OR series.name LIKE :searchIntegral ORDER BY series.popurality;";
                   $statement = $connection->prepare($query);
                   $statement->bindValue(":searchIntegral", '%'.$search.'%', PDO::PARAM_STR);
                   $statement->bindValue(":search", $search, PDO::PARAM_STR);
