@@ -35,13 +35,19 @@
     $name->execute();
 
     $sql = 'SELECT backdrop_path,series.id,series.name FROM series INNER JOIN seriesgenres ON series.id=seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id=genres.id WHERE ';  
-    for ($i=0; $i < count($donnees = $name->fetchAll()) ; $i++){
+    $donnees = $name->fetchAll();
+    for ($i=0; $i < count($donnees); $i++){
       
       $sql.=" genres.name LIKE \"";
-      $sql.=$_SESSION["genres"][$i];
-      if($i+1<count($_SESSION["genres"])){$sql.="\" OR ";} 
+      $sql.=$donnees["series.name"][$i];
+      if($i+1<count($donnees)){$sql.="\" OR ";} 
       else{ 
         $sql.="\";";
       }
-  }
+    }
+    $req = $connection->prepare($sql); 
+    $req->execute();
+    $rows = $req->fetchAll();
+    $ligne = $rows[rand(0,sizeof($rows))];
+    
 ?>
