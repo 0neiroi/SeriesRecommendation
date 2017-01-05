@@ -45,10 +45,7 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <header>
-
-
-            
+        <header>            
             <nav class="navbar navbar-inverse">
 			  <div class="container-fluid">
 			    <div class="navbar-header">

@@ -250,16 +250,18 @@ and open the template in the editor.
           <p> Vos séries en cours:</p>
           <?php
           // on va chercher le nom des séries que l'utilisateur a vues
-            $name = $connection->prepare('SELECT DISTINCT name FROM series INNER JOIN seriesseasons ON series.id=seriesseasons.series_id INNER JOIN seasonsepisodes ON seriesseasons.season_id=seasonsepisodes.season_id INNER JOIN usersepisodes ON seasonsepisodes.episode_id=usersepisodes.episode_id WHERE user_id=?;');
+            $name = $connection->prepare('SELECT DISTINCT name,series.poster_path,series.id FROM series INNER JOIN seriesseasons ON series.id=seriesseasons.series_id INNER JOIN seasonsepisodes ON seriesseasons.season_id=seasonsepisodes.season_id INNER JOIN usersepisodes ON seasonsepisodes.episode_id=usersepisodes.episode_id WHERE user_id=?;');
              
             if (isset($_SESSION["username"])){
 
 				$user_id = $_SESSION["id"];
 				 $name->bindValue(1, $user_id, PDO::PARAM_STR);
   		      $name->execute();
-            
+            	echo '<div class="row">';
+            	$j=0;
             if(($donnees = $name->fetch())==FALSE){
               echo "<p> Vous n'avez commencé aucune série.</p>";
+
             }else{
               do{
                 //pour chaque série que l'utilisateur regarde on va chercher la saison a laquelle il est et le dernier épisode qu'il a vu.
@@ -277,20 +279,40 @@ and open the template in the editor.
             	$episode_max->bindValue(":user", $user_id, PDO::PARAM_STR);
             	$episode_max->execute();
                 $ep_max=$episode_max->fetch();
+                
+                
+                
+				if($j%6==0){
 
-                echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['MAX(episodes.number)']." </p>";
+                     echo "</div>"; 
+                     echo '<div class="row">'; 
+                    }
+
+                    echo '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">';
+                    echo '<a href="seriebis.php?id='.$donnees['id'].'">';
+                    echo '<img src="https://image.tmdb.org/t/p/w640/'.$donnees['poster_path'].'" alt="'.$donnees['name'].'" style="width:100%">';
+                    echo '<div class="caption">';
+                    echo '<p class="saison">'.$donnees['name'].' | Épisode '.$ep_max['MAX(episodes.number)'].' de la saison '.$max_s['MAX(seasons.number)'].'</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  ';
+
+                        
+                    $j++;
+
+                /*echo "<p class='col-lg-3 col-md-3 col-sm-3 col-xs-12 col-lg-offset-2 col-sm-offset-2'> Vous en êtes à l'épisodes ".$ep_max['MAX(episodes.number)']." </p>";
                 echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'>de la saison ".$max_s['MAX(seasons.number)']."</p>";
-                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$donnees['name']."</p>";
+                echo "<p class='col-lg-2 col-md-2 col-sm-3 col-xs-12'> de ".$donnees['name']."</p>";*/
 
                 }while ($donnees = $name->fetch());
                 $name->closeCursor();
                 $season_max->closeCursor();
                 $episode_max->closeCursor();
               }
-			}else{
-				echo "<p class='error'>Erreur d'authentification. Retournez sur la page d'accueil et essayez à nouveau de nous connecter.</p>";
-				echo '<p><a href="../">Retour vers la page d\'accueil..</a></p>';
-			}            	
+              echo "</div>";
+			}
             
             
            

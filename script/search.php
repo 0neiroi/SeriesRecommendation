@@ -1,5 +1,12 @@
 <?php
 session_start();
+// Connect to the database
+                  require 'base.php';
+
+                  // Character encoding of the database
+                  $connection->exec("SET NAMES 'utf8'");
+
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -214,13 +221,9 @@ and open the template in the editor.
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row ">
-            <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8 col-xs-12 ">
+            <div class="col-lg-12 col-md-9 col-sm-10 col-xs-8 col-xs-12 ">
                 <?php
-                  // Connect to the database
-                  require 'base.php';
-
-                  // Character encoding of the database
-                  $connection->exec("SET NAMES 'utf8'");
+                  
                   //require 'indexation.php';
                   $search = "";
                   if (isset($_GET['search'])){
@@ -228,25 +231,53 @@ and open the template in the editor.
                   }
 
 
-                  $query = "SELECT DISTINCT series.name, series.id FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR series.original_name LIKE :searchIntegral OR series.name LIKE :searchIntegral;";
+                  $query = "SELECT DISTINCT series.name, series.id,series.poster_path FROM  series INNER JOIN seriesgenres ON series.id = seriesgenres.series_id INNER JOIN genres ON seriesgenres.genre_id = genres.id  WHERE genres.name LIKE :search OR series.original_name LIKE :searchIntegral OR series.name LIKE :searchIntegral;";
                   $statement = $connection->prepare($query);
                   $statement->bindValue(":searchIntegral", '%'.$search.'%', PDO::PARAM_STR);
                   $statement->bindValue(":search", $search, PDO::PARAM_STR);
                   $statement->execute();
                    //print_r($statement->errorInfo());
                   echo "Resultat de la recherche :";
-                        echo "<ul>";
+                        //echo "<ul>";
 
-                  $rows = $statement->fetchAll();
-                        $genres = array();
+                  //$rows = $statement->fetchAll();
+                        /*$genres = array();
                         for ($i = 0; $i < sizeof($rows); $i++){
                           $row2 = $rows[$i];
                           $genres[$i] = $row2['name'];
                           //echo var_dump($row2['id']);
                           echo "<li><a href='seriebis.php?id=".$row2['id']."'>".$row2['name']."</a></li>";
                         }
-                        echo "</ul>";
+                        echo "</ul>";*/
 
+                        $j=0;
+                  echo '<div class="row">';
+                  if(($donnees = $statement->fetch())==TRUE){
+                    do{
+                    /*for ($i = 0; $i < sizeof($rows); $i++){
+                      $ligne2 = $donnees[$i];
+                    }*/
+                    if($j%6==0){
+                     echo "</div>"; 
+                     echo '<div class="row">'; 
+                    }
+
+                    echo '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4"><div class="thumbnail">';
+                    echo '<a href="seriesbis.php?id='.$donnees['id'].'">';
+                    echo '<img src="https://image.tmdb.org/t/p/w640/'.$donnees['poster_path'].'" alt="'.$donnees['name'].'" style="width:100%">';
+                    echo '<div class="caption">';
+                    echo '<p class="saison"> '.$donnees['name'].'</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  ';
+
+                        
+                    $j++;
+                    }while ($donnees = $statement->fetch());
+                    echo "</div>";
+                  }
                 ?>
             </div>
             <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
